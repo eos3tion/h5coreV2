@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "es6",
+    "outDir": "dist",
+    "strictNullChecks": false,
+    "esModuleInterop": true,
+    "maxNodeModuleJsDepth": 3,
+    "noImplicitAny": true,
+    "allowJs": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
