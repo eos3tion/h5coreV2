@@ -1,5 +1,5 @@
 import { zeroize } from "../utils/StringUtils";
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 import { getUTCDayStart, getDayStart } from "../utils/DateUtils";
 
 /**

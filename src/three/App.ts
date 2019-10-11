@@ -73,6 +73,8 @@ export module App {
     export const {
         addTick,
         removeTick,
+        pauseTick,
+        resumeTick,
         callLater,
         clearCallLater,
         nextTick,

@@ -15,6 +15,10 @@ export const enum TickCallbackState {
      * 需要在下次被移除
      */
     NeedRemove,
+    /**
+     * 激活了，但是暂停执行
+     */
+    Paused,
 }
 
 export type TickFunction = { (now?: number, ...args: any[]): any };
@@ -57,6 +61,9 @@ interface GTimer {
 }
 
 class TickCallback extends Callback<TickFunction> {
+    /**
+     * 执行次数
+     */
     count = Infinity;
 
     tid = NaN;
@@ -98,7 +105,9 @@ export function getTicker(getNow: getNowHandler, minTimeframe = 10) {
         guid: tickerGuid,
         tick,
         add,
-        remove
+        remove,
+        pause,
+        resume,
     }
     tickers[tickerGuid] = ticker;
     return ticker;
@@ -115,19 +124,22 @@ export function getTicker(getNow: getNowHandler, minTimeframe = 10) {
                 timer.nt = now + timer.tid;
                 let len = list.length;
                 if (len > 0) {
-                    let j = 0;
+                    let j = 0, k = 0;
                     for (let i = 0; i < len; i++) {
                         let cb = list[i];
-                        if (cb.state != TickCallbackState.NeedRemove || cb.count == 0) {
-                            tmpList[j] = list[j] = cb;
-                            j++;
+                        let state = cb.state;
+                        if (state != TickCallbackState.NeedRemove && cb.count > 0) {
+                            list[j++] = cb;
+                            if (state != TickCallbackState.Paused) {
+                                tmpList[k++] = cb;
+                            }
                         } else {
                             cb.state = TickCallbackState.Sleep;
                             cb.recycle();
                         }
                     }
                     list.length = j;
-                    for (let i = 0; i < j; i++) {
+                    for (let i = 0; i < k; i++) {
                         let cb = tmpList[i];
                         cb.call(now);
                         cb.count--;
@@ -207,6 +219,24 @@ export function getTicker(getNow: getNowHandler, minTimeframe = 10) {
      */
     function remove(guid: number) {
         removeCB(guid, dict);
+    }
+
+    function pause(guid: number) {
+        setState(guid, TickCallbackState.Paused);
+    }
+
+    function resume(guid: number) {
+        setState(guid, TickCallbackState.Running);
+    }
+
+    function setState(guid: number, state: TickCallbackState) {
+        let cb = dict[guid];
+        if (cb) {
+            let oldState = cb.state;
+            if (oldState != state && (oldState == TickCallbackState.Running || oldState == TickCallbackState.Paused)) {
+                cb.state = state;
+            }
+        }
     }
 }
 

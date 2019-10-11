@@ -4,7 +4,7 @@ import { ByteArray } from "../data/ByteArray";
 import { dispatch } from "../../three/App";
 import { Creator } from "../utils/ClassUtils";
 import { PBStruct, PBType, PBFieldType, getPBUtils } from "../utils/PBUtils";
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 import { TimeVO } from "../data/TimeVO";
 
 /**

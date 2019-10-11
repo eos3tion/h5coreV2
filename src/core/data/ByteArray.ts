@@ -1,4 +1,4 @@
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 import { Int64 } from "./Int64";
 
 export class ByteArray {

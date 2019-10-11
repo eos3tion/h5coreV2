@@ -36,6 +36,12 @@ export function getProcessCtrl(getNow: getNowHandler, minTimeFrame = 10) {
         },
         removeTick(guid: number) {
             ticker.remove(guid);
+        },
+        resumeTick(guid: number) {
+            ticker.resume(guid);
+        },
+        pauseTick(guid: number) {
+            ticker.pause(guid);
         }
     }
 }

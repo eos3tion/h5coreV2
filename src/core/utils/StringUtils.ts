@@ -1,4 +1,4 @@
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 
 const _zeros = "000000000000000000000000000000000000000000000000000000000000";
 const zeroLen = _zeros.length;

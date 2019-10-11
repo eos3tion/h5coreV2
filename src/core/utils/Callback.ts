@@ -1,5 +1,5 @@
 import { IRecyclable, recyclable } from "./ClassUtils";
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 
 interface DebugInfo {
     handle: string;

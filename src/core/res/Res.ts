@@ -4,7 +4,7 @@ import { Recyclable, recyclable } from "../utils/ClassUtils";
 import { HttpRequest } from "./HttpRequest";
 import { parsePath } from "../utils/Path";
 import { appendTo, removeFrom, pushOnce } from "../utils/ArrayUtil";
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 import { dispatch } from "../../three/App";
 import { getTimer } from "../utils/DateUtils";
 

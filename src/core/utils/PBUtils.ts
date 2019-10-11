@@ -1,4 +1,4 @@
-import { ThrowError } from "../logs/Log";
+import { ThrowError } from "../debug/ThrowError";
 import { ByteArray } from "../data/ByteArray";
 
 const enum StringConst {
