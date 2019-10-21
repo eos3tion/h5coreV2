@@ -120,7 +120,7 @@ export abstract class Mediator extends ViewController {
         if (!this._ready) {
             this._ready = true;
             this.afterAllReady();
-            if (this.$view.stage) {
+            if (this.$view.inStage()) {
                 this.stageChange(true);
             }
             if (this._asyncHelper) {
