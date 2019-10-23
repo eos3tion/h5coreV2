@@ -12,6 +12,10 @@ export interface DataEvent extends Event {
     stop?: boolean;
 }
 
+export function getDataEvent(type: EventType, data?: any, target?: any) {
+    return { type, data, target, stop: false } as DataEvent;
+}
+
 
 
 let has = Object.prototype.hasOwnProperty
@@ -26,18 +30,6 @@ let has = Object.prototype.hasOwnProperty
  */
 class Events {
     [evt: string]: EE | EE[]
-}
-
-
-if (Object.create) {
-    Events.prototype = Object.create(null);
-
-    //
-    // This hack is needed because the `__proto__` property is still inherited in
-    // some old browsers like Android 4, iPhone 5.1, Opera 11 and Safari 5.
-    //
-    //@ts-ignore
-    if (!new Events().__proto__) prefix = false;
 }
 
 
@@ -345,13 +337,16 @@ export class EventEmitter {
         return this;
     };
 
+    dispatch(event: Key, data?: any) {
+        this.emit(event, getDataEvent(event, data, this));
+    }
+
     static prefixed: string;
 
     static EventEmitter: typeof EventEmitter;
 }
 
 export interface EventEmitter {
-    dispatch(event: Key, a1?: any, a2?: any, a3?: any, a4?: any, a5?: any): boolean;
 
     off(event: Key, fn: Function, context: any, once?: boolean): void;
 
@@ -361,7 +356,7 @@ export interface EventEmitter {
 }
 
 const ept = EventEmitter.prototype;
-ept.dispatch = ept.emit;
+
 
 //
 // Alias methods names because people roll like that.

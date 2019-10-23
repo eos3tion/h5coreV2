@@ -1,4 +1,4 @@
-import { EventEmitter } from "../utils/EventEmitter";
+import { EventEmitter, getDataEvent } from "../utils/EventEmitter";
 
 let hasXMLHttpRequest: boolean;
 function getXHR() {
@@ -22,7 +22,7 @@ function onerror(this: HttpRequest) {
 
 function updateProgress(this: HttpRequest, event: ProgressEvent) {
     if (event.lengthComputable) {
-        this.dispatchEvent(event);
+        this.dispatch(event.type);
     }
 }
 
@@ -33,10 +33,10 @@ function onReadyStateChange(this: HttpRequest) {
         let self = this;
         window.setTimeout(function () {
             if (ioError) {//请求错误
-                self.dispatch(EventConst.Error);
+                self.dispatch(EventConst.Error, getDataEvent(EventConst.Error, null, self));
             }
             else {
-                self.dispatch(EventConst.Complete);
+                self.dispatch(EventConst.Complete, getDataEvent(EventConst.Complete, null, self));
             }
         }, 0)
 
