@@ -217,3 +217,29 @@ export const offsets = {
     right: 0,
     bottom: 0
 }
+
+/**
+ * @param sw 父级宽度
+ * @param sh 父级高度
+ * @param bw 要调整的可视对象宽度
+ * @param bh 要调整的可视对象高度
+ * @param {boolean} [isWide=false] fixedNarrow 还是 fixedWide，默认按fixedNarrow布局
+ */
+export function getFixedLayout(sw: number, sh: number, bw: number, bh: number, isWide?: boolean) {
+    let dw = sw, dh = sh;
+    let scaleX = sw / bw;
+    let scaleY = sh / bh;
+    let lw = bw;
+    let lh = bh;
+    let scale: number;
+    if (scaleX < scaleY == !isWide) {
+        scale = scaleX;
+        dh = scaleX * bh;
+        lh = bh * sh / dh;
+    } else {
+        scale = scaleY;
+        dw = scaleY * bw;
+        lw = bw * sw / dw;
+    }
+    return { dw, dh, scale, lw, lh };
+}
