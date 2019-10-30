@@ -1,6 +1,7 @@
 import { ThrowError } from "../debug/ThrowError";
 import { EventEmitter } from "../utils/EventEmitter";
 import { dispatch } from "../utils/GlobalDispatcher";
+import { getPropertyDescriptor } from "../utils/ObjectUtil";
 
 /**
      * 绑定属性名，当属性值发生改变时，可自动对外抛eventType事件
@@ -13,7 +14,7 @@ import { dispatch } from "../utils/GlobalDispatcher";
      */
 export function d_fire(eventType: Key, selfDispatch?: boolean) {
     return function (host: any, property: string) {
-        let data = host.getPropertyDescriptor(property);
+        let data = getPropertyDescriptor(host, property);
         if (data && !data.configurable) {
             return DEBUG && ThrowError(`无法绑定${host},${property},该属性不可设置`);
         }

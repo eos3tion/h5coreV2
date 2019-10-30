@@ -10,3 +10,19 @@ export function clone<T>(from: T) {
     }
     return output;
 }
+
+/**
+ * 获取指定属性的描述，会查找当前数据和原型数据
+ * @param target    指定目标
+ * @param property  指定的属性名字
+ */
+export function getPropertyDescriptor(target: any, property: string): PropertyDescriptor {
+    let data = Object.getOwnPropertyDescriptor(target, property);
+    if (data) {
+        return data;
+    }
+    let prototype = Object.getPrototypeOf(target);
+    if (prototype) {
+        return getPropertyDescriptor(prototype, property);
+    }
+}
