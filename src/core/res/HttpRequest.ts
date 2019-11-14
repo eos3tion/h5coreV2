@@ -137,12 +137,12 @@ export class HttpRequest extends EventEmitter implements IHttpRequest {
         xhr.send(data);
     }
 
-    request({ responseType, url, header, method }: HttpRequestParam) {
+    request({ responseType, url, header, method, data }: HttpRequestParam) {
         this.setResponseType(responseType);
         //@ts-ignore
         this.headerObj = header;
         this.open(url, method);
-        this.send();
+        this.send(data);
     }
 
     /**

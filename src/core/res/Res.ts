@@ -8,9 +8,6 @@ import { dispatch } from "../../three/App";
 import { getTimer } from "../utils/DateUtils";
 
 let requestRef: { new(): IHttpRequest };
-export function setRequest(ref: { new(): IHttpRequest }) {
-    requestRef = ref;
-}
 
 const enum Const {
     /**
@@ -208,11 +205,11 @@ export interface InternalResLoader extends ResLoader {
     onLoadFinish(e: DataEvent): any;
 }
 
-export interface ResRequest extends EventEmitter {
+export interface ResRequest extends IHttpRequest {
     item?: ResItem;
     resCB?: ResLoadCallback
 }
-export type ResHttpRequest = Recyclable<IHttpRequest & ResRequest>;
+export type ResHttpRequest = Recyclable<ResRequest>;
 
 
 export module Res {
@@ -325,7 +322,13 @@ export module Res {
     export function setUrlParser(handler: { (uri: string): string }) {
         getResUrl = handler;
     }
-
+    /**
+     * 设置HttpRequest
+     * @param ref 
+     */
+    export function setRequest(ref: { new(): IHttpRequest }) {
+        requestRef = ref;
+    }
     const binLoader = new BinLoader();
 
     /**
