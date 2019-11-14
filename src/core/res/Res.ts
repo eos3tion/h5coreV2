@@ -1,12 +1,16 @@
 import { Callback } from "../utils/Callback";
 import { EventEmitter, DataEvent } from "../utils/EventEmitter";
 import { Recyclable, recyclable } from "../utils/ClassUtils";
-import { HttpRequest } from "./HttpRequest";
 import { parsePath } from "../utils/Path";
 import { appendTo, removeFrom, pushOnce } from "../utils/ArrayUtil";
 import { ThrowError } from "../debug/ThrowError";
 import { dispatch } from "../../three/App";
 import { getTimer } from "../utils/DateUtils";
+
+let requestRef: { new(): IHttpRequest };
+export function setRequest(ref: { new(): IHttpRequest }) {
+    requestRef = ref;
+}
 
 const enum Const {
     /**
@@ -208,7 +212,7 @@ export interface ResRequest extends EventEmitter {
     item?: ResItem;
     resCB?: ResLoadCallback
 }
-export type ResHttpRequest = Recyclable<HttpRequest & ResRequest>;
+export type ResHttpRequest = Recyclable<IHttpRequest & ResRequest>;
 
 
 export module Res {
@@ -242,11 +246,13 @@ export module Res {
             this.type = type;
         }
         loadFile(resItem: ResItem, callback: ResLoadCallback) {
-            let request = recyclable(HttpRequest) as ResHttpRequest;
+            let request = recyclable(requestRef) as ResHttpRequest;
             bindRequest(this, request, resItem, callback);
-            request.setResponseType(this.type);
-            request.open(resItem.url);
-            request.send();
+            request.request({
+                url: resItem.url,
+                responseType: this.type,
+
+            })
         }
 
         onLoadFinish(event: DataEvent) {

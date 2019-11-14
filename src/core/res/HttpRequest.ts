@@ -43,7 +43,7 @@ function onReadyStateChange(this: HttpRequest) {
     }
 }
 
-export class HttpRequest extends EventEmitter {
+export class HttpRequest extends EventEmitter implements IHttpRequest {
     xhr: XMLHttpRequest;
 
     timeout = 0;
@@ -135,6 +135,14 @@ export class HttpRequest extends EventEmitter {
         }
         xhr.timeout = this.timeout;
         xhr.send(data);
+    }
+
+    request({ responseType, url, header, method }: HttpRequestParam) {
+        this.setResponseType(responseType);
+        //@ts-ignore
+        this.headerObj = header;
+        this.open(url, method);
+        this.send();
     }
 
     /**

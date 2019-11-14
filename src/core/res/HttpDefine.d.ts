@@ -27,3 +27,25 @@ declare const enum HttpResponseType {
      */
     Empty = ""
 }
+
+interface HttpRequestParam {
+    url: string;
+    data?: string | any | ArrayBuffer;
+
+    responseType?: HttpResponseType;
+
+    header?: { [header: string]: string };
+
+    /**
+     * HTTP 请求方法  
+     * 默认为`GET`
+     */
+    method?: HttpMethod;
+}
+
+interface IHttpRequest {
+    request(param: HttpRequestParam): any;
+
+    readonly response: any;
+
+}
