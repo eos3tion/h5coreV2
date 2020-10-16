@@ -45,4 +45,12 @@ declare const enum EventConst {
      * 屏幕松开
      */
     TouchUp,
+    /**
+     * App被唤醒，加入到前台
+     */
+    AppAwake,
+    /**
+     * App进入后台
+     */
+    AppSleep,
 }
