@@ -1,4 +1,4 @@
-import { $Callback } from "../../utils/Callback";
+import type { $Callback } from "../../utils/Callback";
 
 /**
  * 限制检查器的基类
@@ -137,9 +137,6 @@ export const enum ModuleCloseState {
 
 /**
  * 模块tip状态
- * 
- * @export
- * @enum {number}
  */
 export const enum ModuleTipState {
 	/**
@@ -154,8 +151,6 @@ export const enum ModuleTipState {
 
 /**
  * 模块面板的显示状态
- * @author 
- *
  */
 export const enum ModuleShowState {
 	/**
