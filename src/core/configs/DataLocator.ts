@@ -6,6 +6,7 @@ import { Creator } from "../utils/ClassUtils";
 import { PBStruct, PBType, PBFieldType, getPBUtils } from "../utils/PBUtils";
 import { ThrowError } from "../debug/ThrowError";
 import { TimeVO } from "../data/TimeVO";
+import { Condition } from "../data/Condition";
 
 /**
  * 表单最终被解析成的类型
@@ -217,6 +218,9 @@ function getJSONValue(value: any, type: any, def?: any) {
         case JSONHeadType.Time:
             value = new TimeVO().decodeBit(value || def || 0);
             break;
+        case JSONHeadType.Condition:
+            value = new Condition().decode(value);
+            break;
     }
     return value;
 }
@@ -309,7 +313,8 @@ const enum JSONHeadType {
     Date = 6,
     Time = 7,
     DateTime = 8,
-    Int32 = 9
+    Int32 = 9,
+    Condition = 10,
 }
 
 
