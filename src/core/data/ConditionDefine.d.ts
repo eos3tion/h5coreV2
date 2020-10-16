@@ -1,0 +1,1 @@
+declare type Condition = typeof import("./Condition").Condition;
