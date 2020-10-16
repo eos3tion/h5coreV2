@@ -1,6 +1,6 @@
 import { IAsync } from "./IAsync";
 import { removeFrom, pushOnce } from "../../utils/ArrayUtil";
-import { App } from "../../../three/App";
+import { App } from "../../App";
 
 
 /**

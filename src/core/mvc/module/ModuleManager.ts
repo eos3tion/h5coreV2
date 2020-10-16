@@ -1,12 +1,12 @@
-import { on, dispatch, App } from "../../../three/App";
+import { on, dispatch, App } from "../../App";
 import { ThrowError } from "../../debug/ThrowError";
 import { ToggleState } from "../core/Facade";
 import { $Callback } from "../../utils/Callback";
-import { IModuleChecker, ModuleTipState, IModuleCfg, ModuleCloseState, ModuleShowState } from "./ModuleDefines";
 import { ViewDele, ViewDeleEvent } from "../core/ViewDele";
 import { ModuleHandler } from "./ModuleHandler";
 import { pushOnce, removeFrom } from "../../utils/ArrayUtil";
 import { DataEvent } from "../../utils/EventEmitter";
+import { ModuleTipState, IModuleCfg, IModuleChecker, ModuleCloseState, ModuleShowState } from "./ModuleDefines";
 
 /**
  * 模块管理器

@@ -1,7 +1,7 @@
 import { ArraySet } from "../data/ArraySet";
 import { Res } from "../res/Res";
 import { ByteArray } from "../data/ByteArray";
-import { dispatch } from "../../three/App";
+import { dispatch } from "../App";
 import { Creator } from "../utils/ClassUtils";
 import { PBStruct, PBType, PBFieldType, getPBUtils } from "../utils/PBUtils";
 import { ThrowError } from "../debug/ThrowError";

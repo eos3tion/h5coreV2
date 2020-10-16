@@ -1,7 +1,7 @@
 import { ViewController } from "./ViewController";
 import { IModulePanel } from "../module/IModulePanel";
 import { isIAsync } from "../async/IAsync";
-import { dispatch } from "../../../three/App";
+import { dispatch } from "../../App";
 import { toggle, ToggleState } from "./Facade";
 
 /**

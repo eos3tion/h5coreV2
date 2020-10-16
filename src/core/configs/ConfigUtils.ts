@@ -1,7 +1,7 @@
 import { ResItem } from "../res/Res";
 import { djbHash } from "../utils/StringUtils";
 import { ThrowError } from "../debug/ThrowError";
-import { dispatch } from "../../three/App";
+import { dispatch } from "../App";
 
 export interface Path {
     /**

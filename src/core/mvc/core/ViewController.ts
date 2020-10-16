@@ -2,8 +2,7 @@ import { FHost } from "./FHost";
 import { DataEvent } from "../../utils/EventEmitter";
 import { ViewDele, ViewDeleEvent } from "./ViewDele";
 import { pushOnce, removeFrom } from "../../utils/ArrayUtil";
-import { on, off, App } from "../../../three/App";
-import { Callback } from "../../utils/Callback";
+import { on, off, App } from "../../App";
 import { TickFunction } from "../../utils/TimerUtils";
 
 
