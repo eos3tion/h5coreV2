@@ -1,8 +1,23 @@
-import { EventEmitter, EventType } from "../core/utils/EventEmitter";
-import { getProcessCtrl } from "../core/ProcessCtrl";
-import { Noop } from "../core/constants/Empty";
+import { EventEmitter, EventType } from "./utils/EventEmitter";
+import { getProcessCtrl } from "./ProcessCtrl";
+import { FalsyFun, Noop } from "./constants/Empty";
 
 let dispatcher = new EventEmitter();
+
+/**
+ * 在下一帧派发事件
+ * @param event 
+ * @param data 
+ */
+export function dispatchNext(event: EventType, data?: any) {
+    App.nextTick({
+        callback: timerDispatch,
+    }, event, data)
+}
+
+function timerDispatch(_: number, event: EventType, data?: any) {
+    dispatcher.dispatch(event, data);
+}
 
 export function dispatch(event: EventType, data?: any) {
     dispatcher.dispatch(event, data);
@@ -45,6 +60,12 @@ export module App {
     export let innerWidth: number;
 
     export let innerHeight: number;
+
+    /**
+     * 尝试复制  
+     * 默认没有任何效果，在项目中进行赋值  
+     */
+    export let doCopy: typeof import("./utils/DomCopy").doCopy = FalsyFun;
 
     /**
      * 播放声音  
