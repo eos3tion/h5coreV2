@@ -1,4 +1,4 @@
-const random = Math.random;
+const { random, PI } = Math;
 
 /**
  * 让数值处于指定的最大值和最小值之间，低于最小值取最小值，高于最大值取最大值
@@ -47,3 +47,17 @@ export function random3(center: number, delta: number) {
 export function random4(center: number, spread: number) {
     return random3(center, spread * .5);
 }
+
+export const Deg2Rad = PI / 180;
+
+export const Rad2Deg = 180 / PI;
+
+/**
+ * 2*π
+ */
+export const PI2 = 2 * PI;
+
+/**
+ * π/2
+ */
+export const PI_1_2 = PI * .5;
