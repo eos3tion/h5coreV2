@@ -1,6 +1,6 @@
 //用于将白鹭的可视对象扩展为 `ViewDele`
 
-import { ViewDeleEvent } from "../core/mvc/core/ViewDele";
+import { ViewDeleEvent } from "../core/mvc/core/ViewDeleEvent";
 
 //绑定事件
 let dpt: any = egret.DisplayObject.prototype;
