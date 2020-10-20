@@ -42,6 +42,18 @@ export module App {
     export let isMobile = false;
 
     /**
+     * 返回webp扩展名
+     */
+    export let webpExt = function () {
+        try {
+            var supportWebp = (window as any).supportWebp == false ? false : document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+        } catch (err) { }
+
+        const _webp = supportWebp ? Ext.WEBP : "";
+        return _webp;
+    }();
+
+    /**
      * 特效级别
      * 0 关闭 除环境光以外的所有灯光 
      * 1 开启光
