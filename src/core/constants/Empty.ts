@@ -1,13 +1,25 @@
+import { ThrowError } from "../debug/ThrowError";
+
 export const Empty = Object.freeze({});
 
 export const EmptyArray = Object.freeze([]);
 
-export const Noop = function () { };
+export function Noop() { };
 
-export const Pipe = function <T>(arg: T): T {
+export function Pipe<T>(arg: T): T {
     return arg;
 }
 
-export const TruthyFun = function () { return true }
+export function TruthyFun() { return true }
 
-export const FalsyFun = function () { return false }
+export function FalsyFun() { return false }
+
+export function MustReplace(errorMsg: string) {
+    return function () {
+        if (DEBUG) {
+            throw Error(errorMsg);
+        } else {
+            ThrowError(errorMsg)
+        }
+    }
+} 
