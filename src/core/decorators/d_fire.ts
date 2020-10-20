@@ -1,6 +1,6 @@
 import { ThrowError } from "../debug/ThrowError";
-import { EventEmitter } from "../utils/EventEmitter";
-import { dispatch } from "../utils/GlobalDispatcher";
+import { EventEmitter } from "../event/EventEmitter";
+import { dispatch } from "../App";
 import { getPropertyDescriptor } from "../utils/ObjectUtil";
 
 /**
