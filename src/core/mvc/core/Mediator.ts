@@ -87,12 +87,10 @@ export abstract class Mediator extends ViewController {
 
     /**
      * Creates an instance of Mediator.
-     * 
-     * @param {string | number} moduleID 模块ID
      */
-    public constructor(moduleID: string | number) {
+    public constructor(moduleID: Key) {
         super(moduleID);
-        this.init && this.init();
+        this.init();
     }
 
     /**
@@ -101,7 +99,7 @@ export abstract class Mediator extends ViewController {
      * @protected
      * @abstract
      */
-    protected init?(): any;
+    protected init() { };
 
     viewCheck(viewReady: boolean) {
         return viewReady;
