@@ -1,6 +1,7 @@
-import { EventEmitter, EventType } from "./utils/EventEmitter";
+import { EventEmitter } from "./event/EventEmitter";
 import { getProcessCtrl } from "./ProcessCtrl";
 import { FalsyFun, Noop } from "./constants/Empty";
+import { TweenManager } from "./tween/TweenManager";
 
 let dispatcher = new EventEmitter();
 
@@ -9,14 +10,15 @@ let dispatcher = new EventEmitter();
  * @param event 
  * @param data 
  */
-export function dispatchNext(event: EventType, data?: any) {
+export function dispatchNext(event: EventType, data?: any, emitter?: EventDispatcher) {
     App.nextTick({
+        context: emitter || dispatcher,
         callback: timerDispatch,
     }, event, data)
 }
 
-function timerDispatch(_: number, event: EventType, data?: any) {
-    dispatcher.dispatch(event, data);
+function timerDispatch(this: EventDispatcher, _: number, event: EventType, data?: any) {
+    this.dispatch(event, data);
 }
 
 export function dispatch(event: EventType, data?: any) {
@@ -61,6 +63,16 @@ export module App {
     export let effect = GameEffect.Middle;
 
     /**
+     * 获取Canvas，默认使用下面代码创建
+     * ```js
+     * document.createElement("canvas");
+     * ```
+     */
+    export let getCanvas = function () {
+        return document.createElement("canvas");
+    }
+
+    /**
      * 纹理缩放
      */
     export let graphicsScale = .5;
@@ -72,6 +84,8 @@ export module App {
     export let innerWidth: number;
 
     export let innerHeight: number;
+
+    export let tweenManager = new TweenManager;
 
     /**
      * 尝试复制  
