@@ -1,5 +1,4 @@
 import { Callback } from "../utils/Callback";
-import { EventEmitter, DataEvent } from "../utils/EventEmitter";
 import { Recyclable, recyclable } from "../utils/ClassUtils";
 import { parsePath } from "../utils/Path";
 import { appendTo, removeFrom, pushOnce } from "../utils/ArrayUtil";

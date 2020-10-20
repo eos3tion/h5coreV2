@@ -1,7 +1,7 @@
 //altas解析参考 https://github.com/EsotericSoftware/spine-runtimes/blob/3.7/spine-ts/core/src/TextureAtlas.ts
 import { Res } from "../../core/res/Res";
 import { Texture } from "../../../node_modules/three/src/textures/Texture";
-import { EventEmitter } from "../../core/utils/EventEmitter";
+import { EventEmitter } from "../../core/event/EventEmitter";
 const { abs } = Math;
 
 function getReader(content: string) {

@@ -2,7 +2,7 @@ import { Matrix } from "../../core/data/Matrix";
 import { Color } from "../../core/data/Color";
 import { clamp } from "../../core/utils/Math";
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
-import { EventEmitter } from "../../core/utils/EventEmitter";
+import { EventEmitter } from "../../core/event/EventEmitter";
 import { Batcher } from "./Batcher";
 
 const _matrix = new Matrix;

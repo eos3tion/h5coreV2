@@ -1,4 +1,4 @@
-import { EventEmitter, getDataEvent } from "../utils/EventEmitter";
+import { EventEmitter, getDataEvent } from "../event/EventEmitter";
 
 let hasXMLHttpRequest: boolean;
 function getXHR() {

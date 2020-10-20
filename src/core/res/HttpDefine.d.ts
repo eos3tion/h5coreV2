@@ -50,7 +50,7 @@ interface IHttpRequest {
 
     readonly response: any;
 
-    on<T>(type: EventConst.Complete | EventConst.Error, handler: { (this: T, event: import("../utils/EventEmitter").DataEvent): any }, context: T): any;
+    on<T>(type: EventConst.Complete | EventConst.Error, handler: { (this: T, event: DataEvent): any }, context: T): any;
 
-    off<T>(type: EventConst.Complete | EventConst.Error, handler: { (this: T, event: import("../utils/EventEmitter").DataEvent): any }, context: T): any;
+    off<T>(type: EventConst.Complete | EventConst.Error, handler: { (this: T, event: DataEvent): any }, context: T): any;
 }

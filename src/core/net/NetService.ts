@@ -1,9 +1,8 @@
-import { App } from "../App";
+import { App, dispatch, on } from "../App";
 import { ByteArray } from "../data/ByteArray";
 import { ThrowError } from "../debug/ThrowError";
 import { Recyclable, recyclable } from "../utils/ClassUtils";
 import { getTimer } from "../utils/DateUtils";
-import { dispatch, on } from "../utils/GlobalDispatcher";
 import { PBUtils } from "../utils/PBUtils";
 import { checkLimit } from "../utils/RequestLimit";
 import { NetSendData, NetData } from "./NetData";
