@@ -1,15 +1,4 @@
-import { DataEvent } from "../../utils/EventEmitter";
-
-/**
- * ViewDele用的事件
- */
-export const ViewDeleEvent = {
-    OnAwake: "OnAwake",
-    OnSleep: "OnSleep",
-    TouchTap: "TouchTap",
-}
-
-export interface ViewDele {
+interface ViewDele {
 
     /**
      * 添加事件
