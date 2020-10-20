@@ -1,9 +1,8 @@
 import { FHost } from "./FHost";
-import { DataEvent } from "../../utils/EventEmitter";
-import { ViewDele, ViewDeleEvent } from "./ViewDele";
 import { pushOnce, removeFrom } from "../../utils/ArrayUtil";
 import { on, off, App } from "../../App";
 import { TickFunction } from "../../utils/TimerUtils";
+import { ViewDeleEvent } from "./ViewDeleEvent";
 
 
 export interface ViewController {
@@ -17,9 +16,6 @@ export interface ViewController {
     onSleep?(): any;
 }
 
-export function regStageEvent(awakeEvent: Key, sleepEvent: Key) {
-
-}
 
 /**
  * 可以调用 @d_interest 的视图  

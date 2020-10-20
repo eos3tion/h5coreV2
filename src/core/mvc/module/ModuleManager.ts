@@ -2,11 +2,10 @@ import { on, dispatch, App } from "../../App";
 import { ThrowError } from "../../debug/ThrowError";
 import { ToggleState } from "../core/Facade";
 import { $Callback } from "../../utils/Callback";
-import { ViewDele, ViewDeleEvent } from "../core/ViewDele";
 import { ModuleHandler } from "./ModuleHandler";
 import { pushOnce, removeFrom } from "../../utils/ArrayUtil";
-import { DataEvent } from "../../utils/EventEmitter";
 import { ModuleTipState, IModuleCfg, IModuleChecker, ModuleCloseState, ModuleShowState } from "./ModuleDefines";
+import { ViewDeleEvent } from "../core/ViewDeleEvent";
 
 /**
  * 模块管理器
