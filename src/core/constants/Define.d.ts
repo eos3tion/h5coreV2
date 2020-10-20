@@ -17,3 +17,5 @@ declare interface Size {
     width: number;
     height: number;
 }
+
+declare interface Rect extends Point, Size { }
