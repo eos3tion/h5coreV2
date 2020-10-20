@@ -1,5 +1,5 @@
 // 白鹭的字符串常量集
-const enum EgretEvent {
+declare const enum EgretEvent {
 
    /**************************************** egret.Event ****************************************/
 
@@ -455,4 +455,21 @@ const enum EgretEvent {
     * @language zh_CN
     */
    IO_ERROR = "ioError",
+}
+
+
+
+declare const enum PosKey {
+   X = "x",
+   Y = "y"
+}
+
+declare const enum SizeKey {
+   Width = "width",
+   Height = "height"
+}
+
+declare const enum EgretMeasureSizeKey {
+   Height = "measuredHeight",
+   Width = "measuredWidth",
 }
