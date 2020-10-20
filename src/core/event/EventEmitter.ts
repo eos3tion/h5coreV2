@@ -1,17 +1,3 @@
-export type EventType = string | number;
-
-//@ts-ignore
-export interface DataEvent extends Event {
-    type: EventType;
-    data?: any;
-    target?: any;
-
-    /**
-     * 事件是否已经停止，只在`DisplayObjectContainer`中有效
-     */
-    stop?: boolean;
-}
-
 export function getDataEvent(type: EventType, data?: any, target?: any) {
     return { type, data, target, stop: false } as DataEvent;
 }
