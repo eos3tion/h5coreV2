@@ -7,6 +7,7 @@ import { pushOnce, removeFrom } from "../../core/utils/ArrayUtil";
 import { Callback } from "../../core/utils/Callback";
 import { ErrorTexture } from "../texture/ColorTexture";
 import { getDynamicTexSheet, DynamicTexSheet } from "../texture/DynamicTextureSheet";
+import { DynamicTexture } from "../texture/TextureSheet";
 import Bitmap = egret.Bitmap;
 
 
@@ -185,7 +186,9 @@ export class TextureResource implements IResource {
                     sheet.remove(this.uri);
                 }
             }
-            tex.dispose();
+            if (!(tex as DynamicTexture).sheet) {//有sheet的不销毁，只切断引用
+                tex.dispose();
+            }
         }
         this._list.length = 0;
         this.state = RequestState.UnRequest;
