@@ -26,3 +26,31 @@ export function getPropertyDescriptor(target: any, property: string): PropertyDe
         return getPropertyDescriptor(prototype, property);
     }
 }
+
+
+/**
+ * 获取完整的 PropertyDescriptor
+ * @param descriptor 
+ * @param enumerable 
+ * @param writable 
+ * @param configurable 
+ */
+export function getDescriptor(descriptor: PropertyDescriptor, enumerable = false, writable = true, configurable = true) {
+    if (!descriptor.set && !descriptor.get) {
+        descriptor.writable = writable;
+    }
+    descriptor.configurable = configurable;
+    descriptor.enumerable = enumerable;
+    return descriptor;
+}
+
+export function getDescriptorMap(descriptors: { [key: string]: PropertyDescriptor }, enumerable = false, writable = true, configurable = true) {
+    for (let key in descriptors) {
+        let desc: PropertyDescriptor = descriptors[key];
+        let enumer = desc.enumerable == undefined ? enumerable : desc.enumerable;
+        let write = desc.writable == undefined ? writable : desc.writable;
+        let config = desc.configurable == undefined ? configurable : desc.configurable;
+        descriptors[key] = getDescriptor(desc, enumer, write, config);
+    }
+    return descriptors as PropertyDescriptorMap;
+}
