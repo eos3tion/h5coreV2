@@ -59,4 +59,9 @@ declare const enum EventConst {
      * Scroller位置改变
      */
     ScrollPosChange,
+    //============================Layout==================================
+    /**
+     * 界面重排
+     */
+    ReLayout,
 }
