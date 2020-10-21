@@ -1,3 +1,6 @@
+import { SharedPoint } from "../../core/constants/Shared";
+import { LayoutType, getFixedLayout, Layout, getLayoutPos } from "../../core/layout/Layout";
+import { LayoutContainer } from "./LayoutContainer";
 
 /**
  * ## 背景图容器  
@@ -33,10 +36,9 @@ export class BGContainer extends LayoutContainer {
         this._lw = lw;
         this._lh = lh;
         host.scaleY = host.scaleX = scale;
-        let pt = Temp.SharedPoint1;
-        Layout.getLayoutPos(dw, dh, sw, sh, this._layout, pt);
-        host.x = pt.x;
-        host.y = pt.y;
+        getLayoutPos(dw, dh, sw, sh, this._layout, SharedPoint);
+        host.x = SharedPoint.x;
+        host.y = SharedPoint.y;
         this.layoutAll();
     }
 }
