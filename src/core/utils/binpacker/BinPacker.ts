@@ -1,4 +1,4 @@
-import { MustReplace } from "../../constants/Empty";
+import { MustReplace } from "../../constants/Shared";
 import { containsRect } from "../GeomUtils";
 
 export const BinPacker = {

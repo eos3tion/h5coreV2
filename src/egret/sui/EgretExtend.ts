@@ -1,4 +1,4 @@
-import { EmptyArray } from "../../core/constants/Empty";
+import { EmptyArray } from "../../core/constants/Shared";
 const { Bitmap, TextField, Graphics } = egret;
 
 let bpt = Bitmap.prototype;

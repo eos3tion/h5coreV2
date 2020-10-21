@@ -1,5 +1,5 @@
 import { App } from "../../../core/App";
-import { Empty } from "../../../core/constants/Empty";
+import { Empty } from "../../../core/constants/Shared";
 import TouchEvent = egret.TouchEvent;
 import Event = egret.Event;
 const key = "$__$Drag";

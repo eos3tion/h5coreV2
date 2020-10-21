@@ -4,6 +4,8 @@ export const Empty = Object.freeze({});
 
 export const EmptyArray = Object.freeze([]);
 
+export const SharedPoint: Point = { x: 0, y: 0 };
+
 export function Noop() { };
 
 export function Pipe<T>(arg: T): T {

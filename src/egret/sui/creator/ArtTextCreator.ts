@@ -1,6 +1,6 @@
 import { App } from "../../../core/App";
 import { ThrowError } from "../../../core/debug/ThrowError";
-import { LayoutTypeVertical } from "../../../core/utils/Layout";
+import { LayoutTypeVertical } from "../../../core/layout/Layout";
 import { BaseCreator } from "../core/BaseCreator";
 import { Component } from "../core/Component";
 import { refreshTexs } from "../core/refreshTexs";

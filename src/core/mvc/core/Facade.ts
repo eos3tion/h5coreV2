@@ -90,11 +90,11 @@ export function removeProxy(proxyName: Key) {
 /**
  * 
  * 注册内部模块
- * @param {{ new (): Proxy }} ref Proxy创建器
- * @param {string} [proxyName] 模块名称
- * @param {boolean} [async=false] 是否异步初始化，默认直接初始化
+ * @param ref Proxy创建器
+ * @param proxyName 模块名称
+ * @param async 是否异步初始化，默认直接初始化
  */
-export function registerInlineProxy(ref: { new(): Proxy }, proxyName?: Key, async?: boolean) {
+export function registerInlineProxy(ref: typeof Proxy, proxyName: Key, async?: boolean) {
     if (!ref) {
         if (DEBUG) {
             ThrowError("registerInlineProxy时,没有ref")
@@ -105,7 +105,7 @@ export function registerInlineProxy(ref: { new(): Proxy }, proxyName?: Key, asyn
     regConfig(ref, proxyName, dict);
     if (!async) { //如果直接初始化
         let dele = dict[proxyName];
-        let host: Proxy = new ref();
+        let host = new ref(proxyName);
         dele.host = host;
         inject(host);
         host.onRegister();
@@ -115,10 +115,10 @@ export function registerInlineProxy(ref: { new(): Proxy }, proxyName?: Key, asyn
 /**
  * 
  * 注册内部Mediator模块
- * @param {{ new (): Mediator }} ref Mediator创建器
- * @param {string} [mediatorName]   注册的模块名字
+ * @param ref Mediator创建器
+ * @param mediatorName   注册的模块名字
  */
-export function registerInlineMediator(ref: { new(): Mediator }, mediatorName: Key) {
+export function registerInlineMediator(ref: typeof Mediator, mediatorName: Key) {
     if (!ref) {
         if (DEBUG) {
             ThrowError(`registerInlineMediator时,没有ref`)
@@ -128,7 +128,7 @@ export function registerInlineMediator(ref: { new(): Mediator }, mediatorName: K
     regConfig(ref, mediatorName, _mediators);
 }
 
-function regConfig<T extends FHost>(clazz: string | { new(): T }, key: Key, dict: { [key: string]: ScriptHelper<T> }, url?: string) {
+function regConfig<T extends FHost>(clazz: string | typeof FHost, key: Key, dict: { [key: string]: ScriptHelper<T> }, url?: string) {
     let dele: ScriptHelper<T>;
     if (DEBUG) {
         dele = dict[key];
@@ -237,7 +237,7 @@ function _getHost(bin: ScriptSolveBin) {
         if (!ref) {
             dele.ref = ref = getRefByName(dele.className);
         }
-        dele.host = host = new ref();
+        dele.host = host = new ref(dele.name);
         inject(host);
         host.onRegister();
     }
@@ -375,7 +375,7 @@ export function getRefByName(name: string): any {
 }
 
 
-export interface ScriptHelper<T> {
+export interface ScriptHelper<T extends FHost> {
 
     /**
      * 主体的类名字
@@ -395,7 +395,7 @@ export interface ScriptHelper<T> {
     /**
      * 创建器
      */
-    ref?: { new(): T }
+    ref?: typeof FHost;
 
     url?: string;
 }

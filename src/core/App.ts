@@ -1,6 +1,6 @@
 import { EventEmitter } from "./event/EventEmitter";
 import { getProcessCtrl } from "./ProcessCtrl";
-import { FalsyFun, Noop } from "./constants/Empty";
+import { FalsyFun, Noop } from "./constants/Shared";
 import { TweenManager } from "./tween/TweenManager";
 
 let dispatcher = new EventEmitter();

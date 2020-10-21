@@ -6,7 +6,7 @@ import { FHost } from "./FHost";
  * @author 3tion
  *
  */
-export abstract class Proxy extends FHost {
+export class Proxy extends FHost {
 
     /**
      * 是否被其他模块依赖

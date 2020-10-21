@@ -9,7 +9,7 @@ import { toggle, ToggleState } from "./Facade";
  * @author 3tion
  *
  */
-export abstract class Mediator extends ViewController {
+export class Mediator extends ViewController {
 
     /**
      * 视图加载完成
@@ -84,9 +84,6 @@ export abstract class Mediator extends ViewController {
         }
     }
 
-    /**
-     * Creates an instance of Mediator.
-     */
     public constructor(moduleID: Key) {
         super(moduleID);
         this.init();

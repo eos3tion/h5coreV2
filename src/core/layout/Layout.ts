@@ -1,4 +1,4 @@
-import { MustReplace } from "../constants/Empty";
+import { MustReplace } from "../constants/Shared";
 
 export const enum LayoutType {
     /**

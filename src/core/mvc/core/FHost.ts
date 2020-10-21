@@ -23,8 +23,6 @@ interface InjectProxyBin {
  */
 export class FHost implements IDepender {
 
-    protected _name: string | number;
-
     /**
      * 用于处理依赖注入的Proxy
      * 
@@ -37,13 +35,10 @@ export class FHost implements IDepender {
     /**
      * 唯一标识
      */
-    public get name(): string | number {
-        return this._name;
-    }
+    readonly name: Key;
 
-
-    constructor(name: string | number) {
-        this._name = name;
+    constructor(name: Key) {
+        this.name = name;
         this.checkInject();
         if (DEBUG) {
             let classes = $gm.$;

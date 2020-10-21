@@ -17,7 +17,7 @@ declare const enum EventConst {
      * List中单击事件
      */
     ItemTouchTap = -1001,
-
+    ItemSelected,
     /**
      * 纹理加载完成
      */

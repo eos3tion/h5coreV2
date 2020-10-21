@@ -1,5 +1,5 @@
 import { App } from "../../../core/App";
-import { EmptyArray } from "../../../core/constants/Empty";
+import { EmptyArray } from "../../../core/constants/Shared";
 import { BaseCreator } from "../core/BaseCreator";
 import { Component } from "../core/Component";
 import { SuiData } from "../core/SuiData";

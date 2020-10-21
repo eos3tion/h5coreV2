@@ -1,4 +1,4 @@
-import { Noop, Pipe } from "../constants/Empty";
+import { Noop, Pipe } from "../constants/Shared";
 
 export const enum ConditionOperator {
     /**
