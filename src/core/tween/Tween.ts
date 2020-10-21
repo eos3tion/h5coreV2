@@ -1,6 +1,6 @@
 import { IEaseFunction } from "./Ease";
 import { ITweenPlugin } from "./ITweenPlugin";
-import { EventEmitter, DataEvent } from "../event/EventEmitter";
+import { EventEmitter } from "../event/EventEmitter";
 import { TweenManager } from "./TweenManager";
 import { clone } from "../utils/ObjectUtil";
 

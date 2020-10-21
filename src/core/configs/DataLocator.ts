@@ -3,10 +3,10 @@ import { Res } from "../res/Res";
 import { ByteArray } from "../data/ByteArray";
 import { dispatch } from "../App";
 import { Creator } from "../utils/ClassUtils";
-import { PBStruct, PBType, PBFieldType, getPBUtils } from "../utils/PBUtils";
 import { ThrowError } from "../debug/ThrowError";
 import { TimeVO } from "../data/TimeVO";
 import { Condition } from "../data/Condition";
+import { getPBUtils } from "../utils/PBUtils";
 
 /**
  * 表单最终被解析成的类型
