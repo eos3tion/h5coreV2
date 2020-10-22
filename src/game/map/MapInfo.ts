@@ -109,14 +109,14 @@ export class MapInfo {
      * @param x 
      * @param y 
      */
-    screen2Map?(x: number, y: number): Point;
+    screen2Map?(x: number, y: number): Point2;
     /**
      * 此方法在执行过`bindMapPos`后生效  
      * 地图坐标转换为屏幕坐标
      * @param x 
      * @param y 
      */
-    map2Screen?(x: number, y: number): Point;
+    map2Screen?(x: number, y: number): Point2;
 
 
     /**
@@ -125,7 +125,7 @@ export class MapInfo {
      * @param y 
      * @param face 
      */
-    getFacePos?(x: number, y: number, face: number): Point;
+    getFacePos?(x: number, y: number, face: number): Point2;
 
     /**
     * 获取地图图块资源路径
@@ -154,8 +154,18 @@ export class MapInfo {
 }
 
 export interface MapPosSolver<T extends MapInfo> {
+    /**
+     * 解决方案初始化
+     * @param map 
+     */
     init?(map: T): any;
-    screen2Map(this: T, x: number, y: number): Point;
+    /**
+     * 屏幕坐标转地图坐标
+     * @param this 
+     * @param x 
+     * @param y 
+     */
+    screen2Map(this: T, x: number, y: number): Point2;
     /**
      * 地图坐标转为屏幕坐标，默认左上
      * @param this 
@@ -163,9 +173,15 @@ export interface MapPosSolver<T extends MapInfo> {
      * @param y 
      * @param isCenter 转为中心点
      */
-    map2Screen(this: T, x: number, y: number, isCenter?: boolean): Point;
+    map2Screen(this: T, x: number, y: number, isCenter?: boolean): Point2;
 
-    getFacePos(x: number, y: number, face: number): Point;
+    /**
+     * 指定朝向的相邻格位坐标
+     * @param x 
+     * @param y 
+     * @param face 
+     */
+    getFacePos(x: number, y: number, face: number): Point2;
 }
 
 
@@ -184,7 +200,7 @@ export function bindMapPos(map: MapInfo) {
     let solver = mapPosSolver[map.pathType];
     let screen2Map = defaultPosSolver,
         map2Screen = defaultPosSolver,
-        getFacePos: { (x: number, y: number, face: number): Point } = defaultPosSolver;
+        getFacePos: { (x: number, y: number, face: number): Point2 } = defaultPosSolver;
     if (solver) {
         solver.init?.(map);
         screen2Map = solver.screen2Map;
@@ -194,4 +210,16 @@ export function bindMapPos(map: MapInfo) {
     map.screen2Map = screen2Map;
     map.map2Screen = map2Screen;
     map.getFacePos = getFacePos;
+}
+
+if (DEBUG) {
+    globalThis.$gm = globalThis.$gm || <$gmType>{};
+    $gm.toggleMapGrid = function () {
+        this.$showMapGrid = !this.$showMapGrid;
+    }
+    $gm.pathSolution = {} as { [type in MapPathType]: drawMapPath };
+
+    $gm.regPathDraw = function (type: MapPathType, handler: drawMapPath) {
+        $gm.pathSolution[type] = handler;
+    }
 }
