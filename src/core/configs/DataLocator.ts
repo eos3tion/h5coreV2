@@ -43,73 +43,57 @@ let parsers: { [index: string]: ConfigDataParser } = {};
  * @static
  */
 let _plist: string[] = [];
+
 /**
- * 配置加载器<br/>
- * 用于预加载数据的解析
- * @author 3tion
- *
+ * 解析原始的配置数据
+ * @param noBinary true 则是已经解析的`原始数据`  
+ *                 false 表示为二进制数据，先要预处理
  */
-export let DataLocator = {
-    /**
-     * 注册处理器
-     */
-    regParser,
-    /**
-     * 解析打包的配置
-     */
-    parsePakedDatas() {
-        let configs = decodePakCfgs(new ByteArray(Res.get("cfgs") as ArrayBuffer));
-        Res.remove("cfgs");
-        let dd = globalThis["$DD"] = {} as CfgData;
-        // 按顺序解析
-        for (let key of _plist) {
-            let parser = parsers[key];
-            let data = parser(configs[key]);
-            if (data) { // 支持一些void的情况
-                dd[key] = data;
-                dispatch(EventConst.OneCfgComplete, key);
-            }
+export function parsePakedDatas(noBinary?: boolean) {
+    let configs = Res.get("cfgs");
+    Res.remove("cfgs");
+    if (!noBinary) {
+        configs = decodePakCfgs(new ByteArray(configs as ArrayBuffer));
+    }
+    let dd = globalThis["$DD"] = {} as CfgData;
+    // 按顺序解析
+    for (let key of _plist) {
+        let parser = parsers[key];
+        let data = parser(configs[key]);
+        if (data) { // 支持一些void的情况
+            dd[key] = data;
+            dispatch(EventConst.OneCfgComplete, key);
         }
+    }
 
-        let extraData = globalThis["$DE"] = {} as ExtraData;
-        //处理额外数据
-        for (let key in configs) {
-            if (key.charAt(0) == "$") {
-                let raw: any[] = configs[key];
-                key = key.substr(1);
-                if (raw) {
-                    let i = 0, len = raw.length, data: { [index: string]: any } = {};
-                    while (i < len) {
-                        let sub: string = raw[i++];
-                        let value = raw[i++];
-                        let test = raw[i];
-                        if (typeof test === "number") {
-                            i++;
-                            value = getJSONValue(value, test);
-                        }
-                        data[sub] = value;
+    let extraData = globalThis["$DE"] = {} as ExtraData;
+    //处理额外数据
+    for (let key in configs) {
+        if (key.charAt(0) == "$") {
+            let raw: any[] = configs[key];
+            key = key.substr(1);
+            if (raw) {
+                let i = 0, len = raw.length, data: { [index: string]: any } = {};
+                while (i < len) {
+                    let sub: string = raw[i++];
+                    let value = raw[i++];
+                    let test = raw[i];
+                    if (typeof test === "number") {
+                        i++;
+                        value = getJSONValue(value, test);
                     }
-                    extraData[key] = data;
+                    data[sub] = value;
                 }
+                extraData[key] = data;
             }
         }
+    }
 
-        dispatch(EventConst.CfgComplete);
-        //清理内存
-        parsers = null;
-        _plist = null;
-    },
-    /**
-     * 
-     * 注册通过H5ExcelTool导出的数据并且有唯一标识的使用此方法注册
-     * @param {keyof CfgData} key 数据的标识
-     * @param {(Creator<any> | 0)} CfgCreator 配置的类名
-     * @param {(string | 0)} [idkey="id"] 唯一标识 0用于标识数组
-     * @param {CfgDataType} [type] 
-     */
-    regCommonParser,
-    regBytesParser
-};
+    dispatch(EventConst.CfgComplete);
+    //清理内存
+    parsers = null;
+    _plist = null;
+}
 
 /**
  * 
@@ -119,7 +103,7 @@ export let DataLocator = {
  * @param {(string | 0)} [idkey="id"] 唯一标识 0用于标识数组
  * @param {CfgDataType} [type] 
  */
-function regCommonParser(key: keyof CfgData, CfgCreator: Creator<any> | 0, idkey: string | 0 = "id", type?: CfgDataType) {
+export function regCommonParser(key: keyof CfgData, CfgCreator: Creator<any> | 0, idkey: string | 0 = "id", type?: CfgDataType) {
     regParser(key, (data: any[]): any => {
         if (!data) return;
         let dict, forEach: { (t: any, idx: number, key: string, dict: any, idkey: string): any };
@@ -170,7 +154,7 @@ function regCommonParser(key: keyof CfgData, CfgCreator: Creator<any> | 0, idkey
  * @param key       配置的标识
  * @param parser    解析器
  */
-function regParser(key: keyof CfgData, parser: ConfigDataParser) {
+export function regParser(key: keyof CfgData, parser: ConfigDataParser) {
     parsers[key] = parser;
     _plist.push(key as string);
 }
@@ -421,7 +405,7 @@ function getParserOption(idkey: string | 0 = "id", type?: CfgDataType) {
  * 通用的Bytes版本的配置解析器
  * @param buffer 
  */
-function regBytesParser(key: keyof CfgData, CfgCreator: Creator<any> | 0, idkey: string | 0 = "id", type?: CfgDataType) {
+export function regBytesParser(key: keyof CfgData, CfgCreator: Creator<any> | 0, idkey: string | 0 = "id", type?: CfgDataType) {
     regParser(key, (bytes: ByteArray) => {
         if (!bytes) {
             return;
