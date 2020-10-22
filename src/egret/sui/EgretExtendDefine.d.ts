@@ -1,6 +1,11 @@
 
 
 declare module egret {
+
+    export interface Texture {
+        tx?: number;
+        ty?: number;
+    }
     export interface Bitmap {
         /**
          * 刷新纹理
@@ -11,7 +16,7 @@ declare module egret {
          * 占位用纹理
          * 
          */
-        placehoder?: egret.Texture;
+        placehoder?: Texture;
     }
 
     export interface DisplayObject {
