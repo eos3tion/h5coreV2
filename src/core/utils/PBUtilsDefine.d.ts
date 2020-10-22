@@ -101,3 +101,5 @@ interface PBStructDictInput {
     $$inted?: any;
     [index: string]: PBStruct | Key;
 }
+
+declare type ByteArray = import("../data/ByteArray").ByteArray;

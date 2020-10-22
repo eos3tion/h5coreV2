@@ -15,3 +15,5 @@ interface ExtraData {
 declare var $DD: CfgData;
 
 declare var $DE: ExtraData;
+
+declare type TimeVO = import("../data/TimeVO").TimeVO;
