@@ -81,3 +81,25 @@ export function getArea(points: Point[]) {
     s += (p0.x - last.x) * (p0.y + last.y);
     return s * .5;
 }
+
+/**
+ * 两点间的距离平方，用于比较距离
+ * @param param0 点1
+ * @param param1 点2
+ * @param ratio 宽高比，y方向会乘以ratio，默认为`1`
+ */
+export function sqDist2({ x: xA, y: yA }: Point, { x: xB, y: yB }: Point, ratio = 1) {
+    const dx = xA - xB;
+    const dy = (yA - yB) * ratio;
+    return dx * dx + dy * dy;
+}
+
+/**
+ * 
+ * @param a 
+ * @param b 
+ * @param ratio 
+ */
+export function dist2(a: Point, b: Point, ratio = 1) {
+    return sqDist2(a, b, ratio);
+}
