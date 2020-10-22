@@ -16,8 +16,6 @@ export interface ListItemRender<T> extends egret.EventDispatcher, IRecyclable {
      */
     size?: Size;
 
-    handleView(): void;
-
     dispose(): void;
 
     readonly view: egret.DisplayObject;
@@ -42,11 +40,14 @@ export interface ListItemRender<T> extends egret.EventDispatcher, IRecyclable {
      * 是否不可被选中
      */
     unelectable?: boolean;
-
     /**
-     * 数据改变的标记
+     * 绑定子控件
      */
-    dataChange?: boolean;
+    bindComponent(): any;
+    /**
+     * 刷新数据
+     */
+    handleView(): any;
 
     /**
      * 是否初始化
@@ -54,13 +55,6 @@ export interface ListItemRender<T> extends egret.EventDispatcher, IRecyclable {
      */
     inited?: boolean;
 
-    /**
-     * 绑定子控件
-     * 
-     * @type {{ () }}
-     * @memberOf ListItemRender
-     */
-    bindComponent?: { (): any };
 
     /**
      * 当前索引
@@ -77,10 +71,10 @@ export interface ListItemRenderer<T, S extends ListItemRenderSkin> extends ViewC
 export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.EventDispatcher implements ListItemRender<T>, SelectableComponents {
 
     private _idx: number;
-    public get index(): number {
+    get index(): number {
         return this._idx;
     }
-    public set index(value: number) {
+    set index(value: number) {
         this._idx = value;
         let v = this._skin;
         if (v) {
@@ -90,26 +84,9 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
 
     protected _data: T;
 
-    private _dataChange: boolean;
+    skinlib: string;
 
-    public get dataChange(): boolean {
-        return this._noCheckSame || this._dataChange;
-    }
-
-    public set dataChange(value: boolean) {
-        this._dataChange = value;
-    }
-
-    public skinlib: string;
-
-    public skinClass: string;
-    /**
-     * 永远执行刷新数据的操作
-     * 
-     * @type {boolean}
-     * @memberOf ListItemRender
-     */
-    protected _noCheckSame?: boolean;
+    skinClass: string;
 
     protected _selected: boolean;
 
@@ -136,7 +113,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
 
     inited = false;
 
-    public constructor() {
+    constructor() {
         super();
 
     }
@@ -171,6 +148,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
 
     bindComponent() { }
 
+
     private onTouchTap() {
         this.dispatch(EventConst.ItemTouchTap);
         this.dispatchEventWith(EgretEvent.TOUCH_TAP);
@@ -181,16 +159,15 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
         if (!this.inited) {
             this._bind();
         }
+        this.handleView();
     }
 
-    public get data() {
+    get data() {
         return this._data;
     }
 
-    public set data(value: T) {
-        if (this._noCheckSame || value != this._data) {
-            this.$setData(value);
-        }
+    set data(value: T) {
+        this.$setData(value);
     }
 
     /**
@@ -200,7 +177,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 
      * @memberOf ListItemRenderer
      */
-    public setContainer(value: egret.DisplayObjectContainer) {
+    setContainer(value: egret.DisplayObjectContainer) {
         let old = this._container;
         this._container = value;
         let s = this._skin;
@@ -218,14 +195,14 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
     //  * 设置已定位好的皮肤
     //  * (description)
     //  */
-    // public set skinTemplete(value: S) {
+    //  set skinTemplete(value: S) {
     //     this._skinTemplete = value;
     //     // let parent = value.parent;
     //     this.skin = value;
     //     // parent.addChild(this);
     // }
 
-    public set skin(value: S) {
+    set skin(value: S) {
         if (value != this._skin) {
             this.$setSkin(value);
         }
@@ -250,7 +227,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
         this._bind();
     }
 
-    public get skin() {
+    get skin() {
         return this._skin;
     }
     /**
@@ -258,7 +235,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 
      * 子类重写
      */
-    public handleView() {
+    handleView() {
         if (!this._sizeChecked) {
             this._sizeChecked = true;
             this.checkViewSize();
@@ -293,13 +270,13 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 获取视图
      * @readonly
      */
-    public get view() {
+    get view() {
         return this._skin;
     }
 
     private _visible = true;
 
-    public set visible(value: boolean) {
+    set visible(value: boolean) {
         if (value != this._visible) {
             this.$setVisible(value);
         }
@@ -313,11 +290,11 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
         }
     }
 
-    public get visible() {
+    get visible() {
         return this._visible;
     }
 
-    public set selected(value: boolean) {
+    set selected(value: boolean) {
         if (this._selected != value) {
             this.$setSelected(value);
         }
@@ -331,7 +308,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 
      * @memberOf ListItemRenderer
      */
-    public setPos(x?: number, y?: number): this;
+    setPos(x?: number, y?: number): this;
     /**
      * 设置视图的坐标
      * 
@@ -339,8 +316,8 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 
      * @memberOf ListItemRenderer
      */
-    public setPos(pos: { x: number, y: number }): this;
-    public setPos(x?: number | { x: number, y: number }, y?: number) {
+    setPos(pos: { x: number, y: number }): this;
+    setPos(x?: number | { x: number, y: number }, y?: number) {
         let v = this._skin;
         if (v) {
             if (typeof x == "object") {
@@ -358,7 +335,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
         this.dispatch(EventConst.CHOOSE_STATE_CHANGE);
     }
 
-    public dispatch(type: Key, data?: any) {
+    dispatch(type: Key, data?: any) {
         let s = this._skin;
         if (s) {
             s.dispatch(type, data);
@@ -366,7 +343,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
         return super.dispatch(type, data);
     }
 
-    public get selected() {
+    get selected() {
         return this._selected;
     }
 
@@ -374,7 +351,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 子类重写
      * 销毁组件
      */
-    public dispose() {
+    dispose() {
         this.removeSkinListener(this._skin);
         //清理自身所有事件
         this.removeAllListeners();
@@ -417,7 +394,7 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      * 
      * @memberOf Button
      */
-    public looseTouch(handler: Function, thisObject?: any, useCapture?: boolean) {
+    looseTouch(handler: Function, thisObject?: any, useCapture?: boolean) {
         this.off(EgretEvent.TOUCH_TAP, handler, thisObject, useCapture);
     }
 
@@ -426,11 +403,11 @@ export class ListItemRenderer<T, S extends ListItemRenderSkin> extends egret.Eve
      */
     protected _dependerHelper: DependerHelper;
 
-    public get isReady() {
+    get isReady() {
         return this._ready;
     }
 
-    public startSync() {
+    startSync() {
 
     }
 }

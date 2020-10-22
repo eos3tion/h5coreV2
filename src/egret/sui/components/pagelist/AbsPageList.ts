@@ -46,21 +46,10 @@ export abstract class AbsPageList<T, R extends ListItemRender<T>> extends egret.
                 continue;
             }
             if (render.inited === false) {
-                if (render.bindComponent) {
-                    render.bindComponent();
-                }
+                render.bindComponent();
                 render.inited = true;
             }
-            let tmp = render.data;
-            if (!tmp || tmp != data[i] || render.dataChange) {
-                render.data = data[i];
-                if (render.handleView) {
-                    render.handleView();
-                }
-                if (render.dataChange) {
-                    render.dataChange = false;
-                }
-            }
+            render.data = data[i];
         }
     }
 
@@ -257,19 +246,13 @@ export abstract class AbsPageList<T, R extends ListItemRender<T>> extends egret.
      * 根据index使某个在舞台上的render刷新
      * 
      * @param {number}  idx
-     * @param {boolean} [force]     是否强制执行setData和handleView 
+     * @param {boolean} [force]     是否强制执行setData 
      * @memberOf PageList
      */
     public refreshAt(idx: number, force?: boolean) {
         let renderer = this._get(idx);
         if (force || renderer.view.stage) {
             renderer.data = this._data[idx];
-            if (typeof renderer.handleView === "function") {
-                renderer.handleView();
-            }
-            if (renderer.dataChange) {
-                renderer.dataChange = false;
-            }
         }
         return this;
     }
