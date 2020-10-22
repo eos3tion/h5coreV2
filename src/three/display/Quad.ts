@@ -2,7 +2,7 @@ import { RawShaderMaterial } from "../../../node_modules/three/src/materials/Raw
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
 import { Vector2 } from "../../../node_modules/three/src/math/Vector2";
 import { Color } from "../../core/data/Color";
-import { isLeft } from "../../core/utils/GeomUtils";
+import { isLeft } from "../../core/utils/geom/GeomUtils";
 import { Batcher, BatchArrayKey } from "./Batcher";
 import { getPrecisionHeader } from "./ShaderChunk";
 import { solvePositions, solveColors, QuadConst } from "./QuadHelper";
