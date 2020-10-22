@@ -149,7 +149,7 @@ export class DisplayObject extends EventEmitter {
         return this._parent;
     }
 
-    globalToLocal(global: Point, result?: Point) {
+    globalToLocal(global: Point2, result?: Point2) {
         const matrix = _matrix;
         matrix.copyFrom(this.getMatrix());
         let d = this.parent;
@@ -161,7 +161,7 @@ export class DisplayObject extends EventEmitter {
         return matrix.transformPoint(global, result);
     }
 
-    localToGlobal(global: Point, result?: Point) {
+    localToGlobal(global: Point2, result?: Point2) {
         const matrix = _matrix;
         matrix.copyFrom(this.getMatrix());
         let d = this.parent;
