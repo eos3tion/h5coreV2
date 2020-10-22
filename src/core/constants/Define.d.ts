@@ -1,11 +1,11 @@
 declare type Key = string | number;
 
-declare interface Point {
+declare interface Point2 {
     x: number;
     y: number;
 }
 
-declare interface Point3 extends Point {
+declare interface Point3 extends Point2 {
     z: number;
 }
 
@@ -18,4 +18,4 @@ declare interface Size {
     height: number;
 }
 
-declare interface Rect extends Point, Size { }
+declare interface Rect extends Point2, Size { }

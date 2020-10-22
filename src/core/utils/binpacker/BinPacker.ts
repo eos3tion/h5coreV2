@@ -1,5 +1,5 @@
 import { MustReplace } from "../../constants/Shared";
-import { containsRect } from "../geom/GeomUtils";
+import { containsRect } from "../../geom/GeomUtils";
 
 export const BinPacker = {
     getBin: MustReplace<Bin>(`创建Bin(x?:number,y?:number,width?:number,height?:number)未实现`)

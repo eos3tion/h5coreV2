@@ -41,7 +41,7 @@ export function copyData<T>(to: T, valueList: any[], keyList: (keyof T)[]) {
     }
 }
 
-export function getZuobiao(data: number[]): Point {
+export function getZuobiao(data: number[]): Point2 {
     return { x: data[0], y: data[1] };
 }
 
@@ -146,7 +146,7 @@ export function parseXAttr(from: any, xattr: any, delOriginKey = true, xReg = /^
     }
     return keyCount;
 }
-export function getZuobiaos(data: any[][], out?: Point[]) {
+export function getZuobiaos(data: any[][], out?: Point2[]) {
     out = out || [];
     for (let i = 0; i < data.length; i++) {
         out.push(getZuobiao(data[i]));

@@ -1,9 +1,10 @@
 import { App, on } from "../../core/App";
 import { ArraySet } from "../../core/data/ArraySet";
 import { ThrowError } from "../../core/debug/ThrowError";
-import { getLayoutPos, LayoutDisplay, LayoutDisplayParent, LayoutType, setLayoutParamHandler } from "../../core/layout/Layout";
+import { getNewPoint2 } from "../../core/geom/PointUtils";
+import { getLayoutPos, LayoutType, setLayoutParamHandler } from "../../core/layout/Layout";
 import { removeDisplay } from "../sui/EgretExtend";
-const pt = { x: 0, y: 0 } as Point;
+const pt = getNewPoint2();
 export abstract class LayoutContainer {
     public static readonly MIN = Object.freeze({ width: 0, height: 0 });
 

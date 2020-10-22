@@ -83,11 +83,11 @@ export class Matrix {
         return new Matrix(this.a, this.b, this.c, this.d, this.tx, this.ty);
     }
 
-    transformPoint(point: Point, result?: Point) {
+    transformPoint(point: Point2, result?: Point2) {
         const { x: pointX, y: pointY } = point;
         let x = this.a * pointX + this.c * pointY + this.tx;
         let y = this.b * pointX + this.d * pointY + this.ty;
-        result = result || {} as Point;
+        result = result || {} as Point2;
         result.x = x;
         result.y = y;
         return result;

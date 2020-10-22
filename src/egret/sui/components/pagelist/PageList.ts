@@ -4,7 +4,7 @@ import { ThrowError } from "../../../../core/debug/ThrowError";
 import { LayoutType, getLayoutPos } from "../../../../core/layout/Layout";
 import { Ease } from "../../../../core/tween/Ease";
 import { ClassFactory, Creator } from "../../../../core/utils/ClassUtils";
-import { intersects } from "../../../../core/utils/geom/GeomUtils";
+import { intersects } from "../../../../core/geom/GeomUtils";
 import { getDescriptorMap } from "../../../../core/utils/ObjectUtil";
 import { removeDisplay } from "../../EgretExtend";
 import { ListItemRender } from "../ListItemRenderer";

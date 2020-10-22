@@ -147,13 +147,13 @@ export interface LayoutDisplayParent extends Size { };
  * @param {number} disHeight 
  * @param {number} parentWidth 
  * @param {number} parentHeight 
- * @param {Point} point 
- * @param {Point} [result] 
+ * @param {Point2} point 
+ * @param {Point2} [result] 
  * @param {number} [padx=0] 
  * @param {number} [pady=0] 
  * @returns 
  */
-function getTipLayoutPos(disWidth: number, disHeight: number, parentWidth: number, parentHeight: number, point: Point, result?: Point, padx = 0, pady = 0) {
+function getTipLayoutPos(disWidth: number, disHeight: number, parentWidth: number, parentHeight: number, point: Point2, result?: Point2, padx = 0, pady = 0) {
     let mx = point.x;
     let my = point.y;
     let x = mx + padx;
@@ -178,8 +178,8 @@ function getTipLayoutPos(disWidth: number, disHeight: number, parentWidth: numbe
     return result;
 }
 
-function getPos(disWidth: number, disHeight: number, parentWidth: number, parentHeight: number, layout: LayoutType, result?: Point, hoffset = 0, voffset = 0, outerV?: boolean, outerH?: boolean) {
-    result = result || {} as Point;
+function getPos(disWidth: number, disHeight: number, parentWidth: number, parentHeight: number, layout: LayoutType, result?: Point2, hoffset = 0, voffset = 0, outerV?: boolean, outerH?: boolean) {
+    result = result || {} as Point2;
     let vertical = layout & LayoutType.VERTICAL_MASK;
     let horizon = layout & LayoutType.HORIZON_MASK;
     let y = 0, x = 0;
@@ -225,7 +225,7 @@ export const getLayoutPos = getPos;
 export interface LayoutParam {
     disWidth: number;
     disHeight: number;
-    display: Point;
+    display: Point2;
     parentWidth: number;
     parentHeight: number;
 }
@@ -314,13 +314,13 @@ export const Layout = {
      * 基于鼠标位置的tip的布局方式
      * 
      * @param {LayoutDisplay} dis 要被布局的可视对象
-     * @param {Point} point 传入的点
+     * @param {Point2} point 传入的点
      * @param {{ x: number, y: number }} [result] 
      * @param {number} [padx=0] 间隔x
      * @param {number} [pady=0] 间隔y
      * @param {LayoutDisplayParent} [parent] 容器的大小
      */
-    tipLayout(layoutDis: LayoutDisplay, point: Point, padx?: number, pady?: number, parent?: LayoutDisplayParent) {
+    tipLayout(layoutDis: LayoutDisplay, point: Point2, padx?: number, pady?: number, parent?: LayoutDisplayParent) {
         getLayoutParam(result, layoutDis, parent);
         if (!result) return;
         let { disWidth, disHeight, display, parentWidth, parentHeight } = result;
@@ -334,8 +334,8 @@ export const Layout = {
      * @param {number} disHeight 
      * @param {number} parentWidth 
      * @param {number} parentHeight 
-     * @param {Point} point 基准点位置
-     * @param {Point} [result] 
+     * @param {Point2} point 基准点位置
+     * @param {Point2} [result] 
      * @param {number} [padx=0] 偏移X
      * @param {number} [pady=0] 偏移Y
      * @returns 
