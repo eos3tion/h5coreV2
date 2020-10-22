@@ -12,6 +12,20 @@ export function clone<T>(from: T) {
 }
 
 /**
+ * 对属性进行浅拷贝
+ * @param from 
+ * @param to 
+ */
+export function copyTo(from: any, to: any) {
+    for (let p in from) {
+        const data = getPropertyDescriptor(to, p);
+        if (!data || (data.set || data.writable)) {// 可进行赋值，防止将属性中的方法给重写
+            to[p] = from[p];
+        }
+    }
+}
+
+/**
  * 获取指定属性的描述，会查找当前数据和原型数据
  * @param target    指定目标
  * @param property  指定的属性名字
