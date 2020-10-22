@@ -4,7 +4,7 @@
  * @param p2 
  * @param p 
  */
-export function isLeft(p1: Point, p2: Point, p: Point) {
+export function isLeft(p1: Point2, p2: Point2, p: Point2) {
     let { x, y } = p;
     return (p1.x - x) * (p2.y - y) < (p2.x - x) * (p1.y - y);
 }
@@ -30,8 +30,8 @@ export function containsRect(main: Rect, tester: Rect) {
  * @param result 结果
  * @returns 点集的几何中心点
  */
-export function getCenter(points: Point[], result?: Point) {
-    result = result || {} as Point;
+export function getCenter(points: Point2[], result?: Point2) {
+    result = result || {} as Point2;
     let len = points.length;
     let x = 0;
     let y = 0;
@@ -66,10 +66,10 @@ export function intersects(a: Rect, b: Rect): boolean {
  * 获取点集围成的区域的面积
  * S=（（X2-X1）*  (Y2+Y1)+（X2-X2）*  (Y3+Y2)+（X4-X3）*  (Y4+Y3)+……+（Xn-Xn-1）*  (Yn+Yn-1)+（X1-Xn）*  (Y1+Yn)）/2
  * @export
- * @param {Point[]} points 点集
+ * @param {Point2[]} points 点集
  * @returns {number}
  */
-export function getArea(points: Point[]) {
+export function getArea(points: Point2[]) {
     let p0 = points[0];
     let s = 0;
     let last = p0;
@@ -80,26 +80,4 @@ export function getArea(points: Point[]) {
     }
     s += (p0.x - last.x) * (p0.y + last.y);
     return s * .5;
-}
-
-/**
- * 两点间的距离平方，用于比较距离
- * @param param0 点1
- * @param param1 点2
- * @param ratio 宽高比，y方向会乘以ratio，默认为`1`
- */
-export function sqDist2({ x: xA, y: yA }: Point, { x: xB, y: yB }: Point, ratio = 1) {
-    const dx = xA - xB;
-    const dy = (yA - yB) * ratio;
-    return dx * dx + dy * dy;
-}
-
-/**
- * 
- * @param a 
- * @param b 
- * @param ratio 
- */
-export function dist2(a: Point, b: Point, ratio = 1) {
-    return sqDist2(a, b, ratio);
 }
