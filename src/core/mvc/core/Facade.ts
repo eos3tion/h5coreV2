@@ -3,6 +3,7 @@ import { Proxy } from "./Proxy";
 import { Mediator } from "./Mediator";
 import { FHost } from "./FHost";
 import { ThrowError } from "../../debug/ThrowError";
+import { Noop } from "../../constants/Shared";
 
 function getNameOfInline(inlineRef: { new(): any }, className?: string): string {
     className = className || inlineRef.name;
@@ -337,7 +338,7 @@ function _executeProxy(proxy: Proxy, handlerName: string, ...args: any[]) {
  */
 let _indecting: any[] = [];
 
-let injectHandler: { (obj: any): any };
+let injectHandler: { (obj: any): any } = Noop;
 
 export function setInjectHandler(value: { (obj: any): any }) {
     injectHandler = value;
