@@ -1,4 +1,4 @@
-import { copy, getDirection, subtract, dot, equals } from "./PointUtils";
+import { copy, getDirection, subtract, dot, equals, getNewPoint2 } from "./PointUtils";
 /**
  * 点所在的位置
  */
@@ -48,12 +48,12 @@ export const enum LineClassification {
 
 }
 
-let tmpPt = { x: 0, y: 0 };
+let tmpPt = getNewPoint2();
 
 export class Line {
-    readonly pA = { x: 0, y: 0 } as Readonly<Point>
+    readonly pA = getNewPoint2() as Readonly<Point2>
 
-    readonly pB = { x: 0, y: 0 } as Readonly<Point>
+    readonly pB = getNewPoint2() as Readonly<Point2>
 
     /**
      * 是否计算过法线
@@ -62,21 +62,21 @@ export class Line {
     /**
      * 法线
      */
-    m_Normal: Point;
+    m_Normal: Point2;
 
-    setPA(pt: Point) {
+    setPA(pt: Point2) {
         copy(pt, this.pA);
         this.calcedNormal = false;
         return this;
     }
 
-    setPB(pt: Point) {
+    setPB(pt: Point2) {
         copy(pt, this.pB);
         this.calcedNormal = false;
         return this;
     }
 
-    setPoints(pA: Point, pB: Point) {
+    setPoints(pA: Point2, pB: Point2) {
         copy(pA, this.pA);
         copy(pB, this.pB);
         this.calcedNormal = false;
@@ -97,7 +97,7 @@ export class Line {
         }
     }
 
-    signedDistance(point: Point) {
+    signedDistance(point: Point2) {
         this.computeNormal();
         copy(point, tmpPt);
         let v2f = subtract(tmpPt, this.pA);
@@ -109,7 +109,7 @@ export class Line {
      * @param point 要检查的点
      * @param epsilon 精度，默认0.000001
      */
-    classifyPoint(point: Point, epsilon = 1e-6) {
+    classifyPoint(point: Point2, epsilon = 1e-6) {
         let result = PointClassification.OnLine;
         let distance = this.signedDistance(point);
         if (distance > epsilon) {
@@ -121,7 +121,7 @@ export class Line {
         return result;
     }
 
-    intersection(other: Line, intersectPoint?: Point) {
+    intersection(other: Line, intersectPoint?: Point2) {
         const { pA: { x: opAX, y: opAY }, pB: { x: opBX, y: opBY } } = other;
         const { pA: { x: pAX, y: pAY }, pB: { x: pBX, y: pBY } } = this;
         const doY = opBY - opAY;
