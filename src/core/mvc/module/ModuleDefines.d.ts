@@ -1,11 +1,11 @@
-import type { $Callback } from "../../utils/Callback";
+
 
 /**
  * 限制检查器的基类
  * @author 3tion
  *
  */
-export interface ILimitChecker {
+declare interface ILimitChecker {
 	/**
 	 * 是否通过检查
 	 * @param data		数据
@@ -21,7 +21,7 @@ export interface ILimitChecker {
  * @author 
  *
  */
-export interface IModuleChecker extends ILimitChecker {
+declare interface IModuleChecker extends ILimitChecker {
 
 	/**
 	 * 检查并修正显示限制和使用限制值配错的情况
@@ -39,7 +39,7 @@ export interface IModuleChecker extends ILimitChecker {
  * @author 3tion
  *
  */
-export interface IModuleCfg {
+declare interface IModuleCfg {
 	/**
 	 *id
 	 */
@@ -112,15 +112,15 @@ export interface IModuleCfg {
 	/**
 	 * 当模块开启时绑定的回调函数
 	 */
-	onOpen?: $Callback[];
+	onOpen?: import("../../utils/Callback").$Callback[];
 
 	/**
 	 * 当模块显示时绑定的回调函数
 	 */
-	onShow?: $Callback[];
+	onShow?: import("../../utils/Callback").$Callback[];
 }
 
-export const enum ModuleCloseState {
+declare const enum ModuleCloseState {
 	/**
 	 * 正常开放
 	 */
@@ -138,7 +138,7 @@ export const enum ModuleCloseState {
 /**
  * 模块tip状态
  */
-export const enum ModuleTipState {
+declare const enum ModuleTipState {
 	/**
 	 * 即将开放
 	 */
@@ -152,7 +152,7 @@ export const enum ModuleTipState {
 /**
  * 模块面板的显示状态
  */
-export const enum ModuleShowState {
+declare const enum ModuleShowState {
 	/**
 	 * 不在舞台上
 	 */
@@ -169,4 +169,68 @@ export const enum ModuleShowState {
 	 * 正在隐藏
 	 */
 	HIDING = 3
+}
+
+/**
+ * 功能配置的基类
+ * @author 3tion
+ */
+interface BaseMCfg {
+
+	/**
+	 * 当前显示状态
+	 */
+	showState: ModuleShowState;
+
+	/**
+	 * 服务器认为此功能开放
+	 */
+	serverOpen: boolean;
+	/**
+	 * 显示限制数据
+	 */
+	showlimits: any[];
+
+	/**
+	 * 使用限制数据
+	 */
+	limits: any[];
+	/**
+	 * 
+	 * 子模块的id列表
+	 * @type {string[]}
+	 */
+	children: string[];
+
+	/**
+	 * 当模块开启时绑定的回调函数
+	 */
+	onOpen?: import("../../utils/Callback").$Callback[];
+}
+
+interface ModuleHandler {
+
+	/**
+	 * 打开某个模块
+	 * @param cfg
+	 */
+	show(cfg: IModuleCfg, param?: ModuleParam): any;
+
+
+	/**
+	 * 重舞台移除某个模块
+	 * @param cfg
+	 *
+	 */
+	hide(cfg: IModuleCfg, param?: ModuleParam): any;
+}
+
+/**
+ * 模块参数
+ * 
+ * @export
+ * @interface ModuleParam
+ */
+interface ModuleParam {
+
 }
