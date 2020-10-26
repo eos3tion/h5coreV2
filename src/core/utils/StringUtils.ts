@@ -84,3 +84,12 @@ export function djbHash(str: string) {
     }
     return hash & 0xffffffff;
 }
+
+/**
+ * 中文文本范围，按2个字宽占用计算
+ * @param str 
+ */
+export function trueLength(str: string) {
+    let arr: string[] = str.match(/[\u2E80-\u9FBF]/ig);
+    return this.length + (arr ? arr.length : 0);
+}
