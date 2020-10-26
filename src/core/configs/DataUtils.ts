@@ -1,4 +1,5 @@
 import { ThrowError } from "../debug/ThrowError";
+import { pushOnce } from "../utils/ArrayUtil";
 
 
 /**
@@ -182,4 +183,27 @@ export function getArray(value: string) {
         arr[idx] = tryParseNumber(item);
     })
     return arr;
+}
+
+
+/**
+ * 将表单的行列互换，以列的属性名作为key，将对应列的数据，放入数组
+ * @param table 
+ */
+export function getColsData<T>(table: T[]) {
+    let dict = {} as { [key in keyof T]: any[] }
+    for (let i = 0; i < table.length; i++) {
+        const item = table[i];
+        for (let key in item) {
+            let v = item[key];
+            if (v != undefined) {
+                let arr = dict[key];
+                if (!arr) {
+                    dict[key] = arr = [];
+                }
+                pushOnce(arr, v);
+            }
+        }
+    }
+    return dict;
 }
