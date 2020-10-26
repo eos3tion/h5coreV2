@@ -2,6 +2,11 @@ import { ViewController } from "./ViewController";
 import { isIAsync } from "../async/IAsync";
 import { dispatch } from "../../App";
 import { toggle, ToggleState } from "./Facade";
+import { MustReplace } from "../../constants/Shared";
+
+export interface Mediator {
+    createPanel(key: string, className: string, ...otherDepends: string[]): IModulePanel;
+}
 
 /**
  * 视图控制器，持有视图<br/>
@@ -134,3 +139,5 @@ export class Mediator extends ViewController {
     }
 
 }
+
+Mediator.prototype.createPanel = MustReplace(`子项目必须替换此方法`)
