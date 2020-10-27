@@ -102,10 +102,9 @@ export function registerInlineProxy(ref: typeof Proxy, proxyName: Key, async?: b
         }
         return
     }
-    let dict = _proxys;
-    regConfig(ref, proxyName, dict);
+    regConfig(ref, proxyName, _proxys);
     if (!async) { //如果直接初始化
-        let dele = dict[proxyName];
+        let dele = _proxys[proxyName];
         let host = new ref(proxyName);
         dele.host = host;
         inject(host);
