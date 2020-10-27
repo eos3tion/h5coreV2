@@ -32,6 +32,11 @@ export function on(type: EventType, listener: Function, context?: any) {
 export function off(type: EventType, listener: Function, context?: any) {
     dispatcher.off(type, listener, context);
 }
+
+export function once(type: EventType, listener: Function, context?: any) {
+    dispatcher.once(type, listener, context);
+}
+
 /**
  * 游戏中的数据
  */
