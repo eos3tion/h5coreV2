@@ -224,7 +224,7 @@ export class ModuleManager {
                         ThrowError("有功能配置的限制类型并未实现：" + unsolve);
                     }
                 }
-                dispatch(EventConst.MODULE_CHECKER_INITED);
+                dispatch(EventConst.ModuleCheckerInited);
             }
         }
     }
@@ -389,7 +389,7 @@ export class ModuleManager {
         }
         _unopens.length = j;
         if (changed) {
-            dispatch(EventConst.MODULE_SHOW_CHANGED, _unshowns.length);
+            dispatch(EventConst.ModuleShowChanged, _unshowns.length);
         }
     }
 
@@ -441,7 +441,7 @@ export class ModuleManager {
             DEBUG && ThrowError("ModuleManager execute时，无法找到对应模块配置,ModuleID为:" + moduleID);
             return;
         }
-        dispatch(EventConst.MODULE_TRY_TOGGLE, moduleID);
+        dispatch(EventConst.ModuleTryToggle, moduleID);
         let needShow: boolean;
         show = ~~show;
         switch (show) {
@@ -491,7 +491,7 @@ export class ModuleManager {
         if (mcfg) {
             if (close != mcfg.serverClose) {
                 mcfg.serverClose = close;
-                dispatch(close ? EventConst.MODULE_SERVER_CLOSE : EventConst.MODULE_SERVER_OPEN, mid);
+                dispatch(close ? EventConst.ModuleServerClose : EventConst.ModuleServerOpen, mid);
             }
         }
     }
