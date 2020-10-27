@@ -5,6 +5,7 @@ import { appendTo, removeFrom, pushOnce } from "../utils/ArrayUtil";
 import { ThrowError } from "../debug/ThrowError";
 import { dispatch } from "../App";
 import { getTimer } from "../utils/DateUtils";
+import { ConfigUtils } from "../configs/ConfigUtils";
 
 let requestRef: { new(): IHttpRequest };
 
@@ -496,7 +497,10 @@ export module Res {
         //检查是否已经有资源
         let item = resDict[uri];
         if (!item) {
-            item = { uri, url, type: getType(uri) }
+            if (!url) {
+                url = ConfigUtils.getResUrl(uri);
+            }
+            item = { uri, url, type: getType(url) }
         }
         loadRes(item, callback, queueID);
     }
