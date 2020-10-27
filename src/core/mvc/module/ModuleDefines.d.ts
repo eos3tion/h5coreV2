@@ -55,7 +55,7 @@ declare interface IModuleCfg {
 	/**
 	 * 服务器认为此功能开放
 	 */
-	serverOpen: boolean;
+	serverClose: boolean;
 	/**
 	 * 显示类型
 	 */
@@ -171,42 +171,6 @@ declare const enum ModuleShowState {
 	HIDING = 3
 }
 
-/**
- * 功能配置的基类
- * @author 3tion
- */
-interface BaseMCfg {
-
-	/**
-	 * 当前显示状态
-	 */
-	showState: ModuleShowState;
-
-	/**
-	 * 服务器认为此功能开放
-	 */
-	serverOpen: boolean;
-	/**
-	 * 显示限制数据
-	 */
-	showlimits: any[];
-
-	/**
-	 * 使用限制数据
-	 */
-	limits: any[];
-	/**
-	 * 
-	 * 子模块的id列表
-	 * @type {string[]}
-	 */
-	children: string[];
-
-	/**
-	 * 当模块开启时绑定的回调函数
-	 */
-	onOpen?: import("../../utils/Callback").$Callback[];
-}
 
 interface ModuleHandler {
 

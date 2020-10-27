@@ -264,7 +264,7 @@ export class ModuleManager {
             }
         }
         if (DEBUG && !noClientCheck) { //屏蔽客户端检测只针对open，不针对show
-            let flag = cfg && !cfg.close && cfg.serverOpen;
+            let flag = cfg && !cfg.close && !cfg.serverClose;
             if (flag) {
                 if (this._checkers) {
                     let checker = this._checkers[cfg.limittype];
@@ -484,14 +484,14 @@ export class ModuleManager {
      * 改变服务器模块状态
      * 
      * @param {string | number}  mid    服务器模块id
-     * @param {boolean} state       模块状态
+     * @param {boolean} close           模块是否关闭
      */
-    serverChangeModuleState(mid: string | number, state: boolean) {
+    serverChangeModuleState(mid: string | number, close: boolean) {
         let mcfg = this._allById[mid];
         if (mcfg) {
-            if (state != mcfg.serverOpen) {
-                mcfg.serverOpen = state;
-                dispatch(state ? EventConst.MODULE_SERVER_OPEN : EventConst.MODULE_SERVER_CLOSE, mid);
+            if (close != mcfg.serverClose) {
+                mcfg.serverClose = close;
+                dispatch(close ? EventConst.MODULE_SERVER_CLOSE : EventConst.MODULE_SERVER_OPEN, mid);
             }
         }
     }
