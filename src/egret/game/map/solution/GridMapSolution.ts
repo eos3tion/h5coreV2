@@ -1,7 +1,7 @@
 import { getColorString } from "../../../../core/data/Color";
 import { MapPathType, bindMapPos } from "../../../../game/map/MapInfo";
 import { GridMapInfo, setInit } from "../../../../game/map/path/grid/GridMapInfo";
-import { removeDisplay } from "../../../sui/EgretExtend";
+import { removeDisplay } from "../../../EgretExtend";
 import { getDynamicTexSheet } from "../../../texture/DynamicTextureSheet";
 import { TileMapLayer } from "../tilemap/TileMapLayer";
 

@@ -1,6 +1,6 @@
 import { MapPathType } from "../../../../game/map/MapInfo";
 import { NavMeshMapInfo } from "../../../../game/map/path/navmesh/NavMeshMapInfo";
-import { removeDisplay } from "../../../sui/EgretExtend";
+import { removeDisplay } from "../../../EgretExtend";
 import { TileMapLayer } from "../tilemap/TileMapLayer";
 
 

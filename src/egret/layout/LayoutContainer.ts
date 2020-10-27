@@ -3,7 +3,7 @@ import { ArraySet } from "../../core/data/ArraySet";
 import { ThrowError } from "../../core/debug/ThrowError";
 import { getNewPoint2 } from "../../core/geom/PointUtils";
 import { getLayoutPos, LayoutType, setLayoutParamHandler } from "../../core/layout/Layout";
-import { removeDisplay } from "../sui/EgretExtend";
+import { removeDisplay } from "../EgretExtend";
 const pt = getNewPoint2();
 export abstract class LayoutContainer {
     public static readonly MIN = Object.freeze({ width: 0, height: 0 });

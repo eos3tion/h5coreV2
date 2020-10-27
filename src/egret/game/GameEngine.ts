@@ -1,4 +1,4 @@
-import { removeDisplay } from "../sui/EgretExtend";
+import { removeDisplay } from "../EgretExtend";
 import { Camera } from "./camera/Camera";
 import { GameLayer, BaseLayer, SortedLayer } from "./GameLayer";
 

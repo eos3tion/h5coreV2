@@ -6,7 +6,7 @@ import { Ease } from "../../../../core/tween/Ease";
 import { ClassFactory, Creator } from "../../../../core/utils/ClassUtils";
 import { intersects } from "../../../../core/geom/GeomUtils";
 import { getDescriptorMap } from "../../../../core/utils/ObjectUtil";
-import { removeDisplay } from "../../EgretExtend";
+import { removeDisplay } from "../../../EgretExtend";
 import { ListItemRender } from "../ListItemRenderer";
 import { ScrollerOption, Scroller } from "../Scroller";
 import { AbsPageList } from "./AbsPageList";

@@ -1,5 +1,5 @@
 import { Recyclable, recyclable } from "../../../core/utils/ClassUtils";
-import { removeDisplay } from "../../sui/EgretExtend";
+import { removeDisplay } from "../../EgretExtend";
 import { FrameInfo, IDrawInfo } from "../animation/AnimationDefine";
 import { ResourceBitmap } from "../animation/ResourceBitmap";
 import { UnitResource } from "../animation/UnitResource";

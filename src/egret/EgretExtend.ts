@@ -1,8 +1,21 @@
-import { EmptyArray } from "../../core/constants/Shared";
-import { Mediator } from "../../core/mvc/core/Mediator";
-import { Res } from "../../core/res/Res";
-import { Panel } from "./components/Panel";
+import { EmptyArray } from "../core/constants/Shared";
+import { Mediator } from "../core/mvc/core/Mediator";
+import { Res } from "../core/res/Res";
+import { Panel } from "./sui/components/Panel";
+import { ViewDeleEvent } from "../core/mvc/core/ViewDeleEvent";
 
+//绑定事件
+let dpt: any = egret.DisplayObject.prototype;
+dpt.on$ = dpt.$on;
+dpt.off$ = dpt.$off;
+dpt.inStage = function (this: egret.DisplayObject) {
+    return this.$stage !== null;
+}
+
+//替换事件
+ViewDeleEvent.OnAwake = EgretEvent.ADDED_TO_STAGE;
+ViewDeleEvent.OnSleep = EgretEvent.REMOVED_FROM_STAGE;
+ViewDeleEvent.TouchTap = EgretEvent.TOUCH_TAP;
 
 /**
  * 移除可视对象

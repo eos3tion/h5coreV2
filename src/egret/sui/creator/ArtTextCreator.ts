@@ -5,7 +5,7 @@ import { BaseCreator } from "../core/BaseCreator";
 import { Component } from "../core/Component";
 import { refreshTexs } from "../core/refreshTexs";
 import { SuiData } from "../core/SuiData";
-import { removeDisplay } from "../EgretExtend";
+import { removeDisplay } from "../../EgretExtend";
 
 
 const alignHandler: { [layoutType: number]: { (bmp: egret.DisplayObject, maxHeight: number): void } } = {

@@ -1,5 +1,5 @@
 import { App } from "../../../core/App";
-import { removeDisplay } from "../../sui/EgretExtend";
+import { removeDisplay } from "../../EgretExtend";
 import { FrameInfo, ActionInfo, IDrawInfo } from "../animation/AnimationDefine";
 import { PstInfo } from "../animation/PstInfo";
 import { UnitResource } from "../animation/UnitResource";

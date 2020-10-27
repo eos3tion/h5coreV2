@@ -9,7 +9,7 @@ import { getTexture } from "../../texture/ColorTexture";
 import { ComponentWithEnable, addEnable } from "../core/Component";
 import { SuiDataCallback, SuiData } from "../core/SuiData";
 import { createSuiComponents, loadSuiData } from "../core/SuiResManager";
-import { removeDisplay } from "../EgretExtend";
+import { removeDisplay } from "../../EgretExtend";
 
 
 const enum Const {

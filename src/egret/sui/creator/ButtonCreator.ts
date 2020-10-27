@@ -1,7 +1,7 @@
 import { BaseCreator } from "../core/BaseCreator";
 import { Component } from "../core/Component";
 import { ComponentData } from "../core/SuiResManager";
-import { removeDisplay } from "../EgretExtend";
+import { removeDisplay } from "../../EgretExtend";
 import { TouchDown } from "../utils/TouchDown";
 import { TextFieldCreator } from "./TextFieldCreator";
 
