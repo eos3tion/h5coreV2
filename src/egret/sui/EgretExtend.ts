@@ -1,5 +1,6 @@
 import { EmptyArray } from "../../core/constants/Shared";
 import { Mediator } from "../../core/mvc/core/Mediator";
+import { Res } from "../../core/res/Res";
 import { Panel } from "./components/Panel";
 
 
@@ -13,6 +14,18 @@ export function removeDisplay(display: egret.DisplayObject, fire = true) {
     if (display && display.parent) {
         display.parent.removeChild(display, fire);
     }
+}
+
+class HttpRequest extends egret.HttpRequest implements IHttpRequest {
+    request({ responseType, url, header, method, data }: HttpRequestParam) {
+        this.responseType = responseType;
+        for (const key in header) {
+            this.setRequestHeader(key, header[key]);
+        }
+        this.open(url, method);
+        this.send(data);
+    }
+
 }
 
 export function extendEgret() {
@@ -57,4 +70,6 @@ export function extendEgret() {
         panel.bind(key, className, ...deps);
         return panel;
     }
+
+    Res.setRequest(HttpRequest);
 }
