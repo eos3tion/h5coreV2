@@ -91,5 +91,5 @@ export function djbHash(str: string) {
  */
 export function trueLength(str: string) {
     let arr: string[] = str.match(/[\u2E80-\u9FBF]/ig);
-    return this.length + (arr ? arr.length : 0);
+    return str.length + (arr ? arr.length : 0);
 }
