@@ -9,7 +9,7 @@ import { ComponentWithEnable, addEnable } from "../core/Component";
  * @pb 
  *
  */
-export class Image extends egret.Bitmap implements TextureResourceOption {
+export class Img extends egret.Bitmap implements TextureResourceOption {
 
 	/**
 	 * 资源唯一标识
@@ -109,6 +109,6 @@ export class Image extends egret.Bitmap implements TextureResourceOption {
 	}
 }
 
-export interface Image extends ComponentWithEnable { };
+export interface Img extends ComponentWithEnable { };
 
-addEnable(Image);
+addEnable(Img);

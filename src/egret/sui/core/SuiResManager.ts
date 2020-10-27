@@ -17,7 +17,7 @@ import { TextFieldCreator } from "../creator/TextFieldCreator";
 import { ArtWord } from "./ArtWord";
 import { BaseCreator } from "./BaseCreator";
 import { SuiData, SuiDataCallback } from "./SuiData";
-import { Image } from "../components/Image";
+import { Img } from "../components/Img";
 import { View } from "./View";
 import Texture = egret.Texture;
 
@@ -546,7 +546,7 @@ function getElement(suiData: SuiData, data: ComponentData) {
             initBaseData(sp, bd);
             return sp;
         case ExportType.ImageLoader:
-            let il = new Image();
+            let il = new Img();
             initBaseData(il, bd);
             return il;
         default:
