@@ -6,6 +6,9 @@ export const EmptyArray = Object.freeze([]);
 
 export const SharedPoint: Point2 = { x: 0, y: 0 };
 
+export const SharedArray: any[] = [];
+export const SharedArray1: any[] = [];
+
 export function Noop() { };
 
 export function Pipe<T>(arg: T): T {
