@@ -309,7 +309,7 @@ function _executeMediator(mediator: Mediator, handlerName: string, ...args: any[
 }
 
 function _executeAndShowMediator(mediator: Mediator, handlerName: string, ...args: any[]) {
-    toggle(mediator.name, ToggleState.SHOW, false);//showTip为 false是不用再次提示，executeMediator已经执行过模块是否开启的检查
+    toggle(mediator.name, ToggleState.Show, false);//showTip为 false是不用再次提示，executeMediator已经执行过模块是否开启的检查
     _executeMediator(mediator, handlerName, ...args);
 }
 
@@ -435,7 +435,7 @@ interface ScriptSolveBin {
 
 
 export const enum ToggleState {
-    HIDE = -1,
-    AUTO = 0,
-    SHOW = 1
+    Hide = -1,
+    Auto = 0,
+    Show = 1
 }

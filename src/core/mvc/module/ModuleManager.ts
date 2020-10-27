@@ -445,7 +445,7 @@ export class ModuleManager {
         let needShow: boolean;
         show = ~~show;
         switch (show) {
-            case ToggleState.AUTO:
+            case ToggleState.Auto:
                 switch (cfg.showState) {
                     case ModuleShowState.HIDE:
                     case ModuleShowState.HIDING:
@@ -453,7 +453,7 @@ export class ModuleManager {
                         break;
                 }
                 break;
-            case ToggleState.SHOW:
+            case ToggleState.Show:
                 needShow = true;
                 break;
         }

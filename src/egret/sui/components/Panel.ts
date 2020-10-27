@@ -293,7 +293,7 @@ export class Panel extends egret.Sprite implements SuiDataCallback, IAsyncPanel 
      * @protected
      */
     public hide() {
-        toggle(this.moduleID, ToggleState.HIDE);
+        toggle(this.moduleID, ToggleState.Hide);
     }
 
 
@@ -302,7 +302,7 @@ export class Panel extends egret.Sprite implements SuiDataCallback, IAsyncPanel 
     }
 
     public show() {
-        toggle(this.moduleID, ToggleState.SHOW);
+        toggle(this.moduleID, ToggleState.Show);
     }
 
     //		/**

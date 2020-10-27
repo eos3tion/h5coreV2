@@ -135,7 +135,7 @@ export class Mediator extends ViewController {
      */
     hide(...arg: any[]): any;
     hide() {
-        toggle(this._name, ToggleState.HIDE);
+        toggle(this._name, ToggleState.Hide);
     }
 
 }
