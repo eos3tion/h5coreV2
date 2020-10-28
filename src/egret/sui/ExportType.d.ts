@@ -11,7 +11,10 @@ declare const enum ExportType {
         Text = 1,
         /**复合容器**/
         Container = 2,
-        /**按钮 */
+        /**
+         * 按钮
+         * @deprecated
+         */
         Button = 3,
 
         /**九宫图片*/

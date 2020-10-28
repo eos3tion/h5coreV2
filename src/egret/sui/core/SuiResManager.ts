@@ -5,7 +5,6 @@ import { Callback } from "../../../core/utils/Callback";
 import { adjustColorFilter } from "../../utils/FilterUtils";
 import { ArtTextCreator } from "../creator/ArtTextCreator";
 import { BitmapCreator } from "../creator/BitmapCreator";
-import { ButtonCreator } from "../creator/ButtonCreator";
 import { MCButtonCreator, MCButton } from "../creator/MCButtonCreator";
 import { MovieClipCreator, MovieClip } from "../creator/MovieClipCreator";
 import { ProgressBarCreator, MCProgressCreator } from "../creator/ProgressBarCreator";
@@ -55,7 +54,6 @@ export const suiTFCreator = sharedTFCreator;
  * 创建器
  */
 const _creators: { [index: string]: { new(): BaseCreator<egret.DisplayObject> } } = {
-    [ExportType.Button]: ButtonCreator,
     [ExportType.ShapeNumber]: ArtTextCreator,
     [ExportType.ScaleBitmap]: ScaleBitmapCreator,
     [ExportType.Slider]: SliderCreator,
