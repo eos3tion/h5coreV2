@@ -646,7 +646,7 @@ export class ByteArray {
         var high = i64.high;
         var low = i64.low;
         if (high == 0) {
-            this.writeVarint(low);
+            this.writeVarint(low >>> 0);
         }
         else {
             for (var i: number = 0; i < 4; ++i) {
