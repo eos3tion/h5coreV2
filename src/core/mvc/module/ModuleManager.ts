@@ -184,10 +184,10 @@ export class ModuleManager {
                     if (showtype == limittype) {
                         if (checker) {
                             if (RELEASE) {
-                                checker.adjustLimitDatas(cfg.showlimits, cfg.limits);
+                                checker.adjustLimits(cfg);
                             }
                             if (DEBUG) {
-                                if (checker.adjustLimitDatas(cfg.showlimits, cfg.limits)) {
+                                if (checker.adjustLimits(cfg)) {
                                     errString += cfg.id + " ";
                                 }
                             }
@@ -245,7 +245,7 @@ export class ModuleManager {
         if (flag && this._checkers) {
             let checker = this._checkers[cfg.showtype];
             if (checker) {
-                flag = checker.check(cfg.showlimits, false);
+                flag = checker.checkShow(cfg, false);
             }
         }
         return flag;
@@ -269,7 +269,7 @@ export class ModuleManager {
                 if (this._checkers) {
                     let checker = this._checkers[cfg.limittype];
                     if (checker) {
-                        flag = checker.check(cfg.limits, showtip);
+                        flag = checker.checkOpen(cfg, showtip);
                     }
                 }
             }

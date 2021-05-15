@@ -7,13 +7,17 @@
  */
 declare interface ILimitChecker {
 	/**
-	 * 是否通过检查
-	 * @param data		数据
-	 * @param showtip	是否显示tip
-	 * @return
-	 *
+	 * 是否可以显示
+	 * @param cfg 
+	 * @param showtip 是否显示tip
 	 */
-	check(data: any, showtip: boolean): boolean
+	checkShow(cfg: IModuleCfg, showtip: boolean): boolean
+	/**
+	 * 是否开启
+	 * @param cfg 
+	 * @param showtip 是否显示tip
+	 */
+	checkOpen(cfg: IModuleCfg, showtip: boolean): boolean
 }
 
 /**
@@ -25,11 +29,10 @@ declare interface IModuleChecker extends ILimitChecker {
 
 	/**
 	 * 检查并修正显示限制和使用限制值配错的情况
-	 * @param	{any}	showLimits		显示限制的数据
-	 * @param	{any}	limits			使用限制的数据
-	 * @return	{boolean}   <br/>true 有配置错误<br/>false 无配置错误
+	 * @return	`true` 有配置错误  
+	 *          `false` 无配置错误
 	 */
-	adjustLimitDatas(showLimits: any, limits: any): boolean;
+	adjustLimits(cfg: IModuleCfg): boolean;
 
 }
 
