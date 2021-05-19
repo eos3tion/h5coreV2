@@ -11,6 +11,7 @@ import { NetRouter, INetHandler } from "./NetRouter";
 
 if (DEBUG) {
     globalThis.$gm = <$gmType>globalThis.$gm || <$gmType>{};
+    $gm.multiSend = 0;
     $gm.__getNSFilter = (...args) => {
         let nsFilter = <$NSFilter>{};
         if (args.length) {
@@ -150,6 +151,12 @@ export interface NSHeader {
 function send2(cmd: number, data?: any, msgType?: Key, limit?: number) {
     if (checkLimit(cmd, limit)) {
         this._send(cmd, data, msgType);
+        if (DEBUG) {
+            let multiSend = $gm.multiSend;
+            for (let i = 0; i < multiSend; i++) {
+                this._send(cmd, data, msgType);
+            }
+        }
     } else {
         dispatch(EventConst.NetServiceSendLimit, cmd);
     }
@@ -420,6 +427,12 @@ export abstract class NetService {
     public send(cmd: number, data?: any, msgType?: Key, limit?: number) {
         if (checkLimit(cmd, limit)) {
             this._send(cmd, data, msgType);
+            if (DEBUG) {
+                let multiSend = $gm.multiSend;
+                for (let i = 0; i < multiSend; i++) {
+                    this._send(cmd, data, msgType);
+                }
+            }
         }
     }
 
@@ -539,11 +552,10 @@ export abstract class NetService {
 
 
     /**
-     * @private 
-     * @param bytes
-     * @param out
+     * @param bytes      字节流
+     * @param dataSolver 外部数据处理器
      */
-    decodeBytes(bytes: ByteArray) {
+    decodeBytes(bytes: ByteArray, dataSolver?: { (list: Recyclable<NetData>[]): any }) {
         let receiveMSG = this._receiveMSG;
         let tmpList = this._tmpList;
         let idx = 0;
@@ -628,6 +640,10 @@ export abstract class NetService {
                 let ndata = tmpList[i];
                 this.$writeNSLog(now, "receive", ndata.cmd, ndata.data);
             }
+        }
+
+        if (dataSolver && dataSolver(tmpList)) {
+            return
         }
 
         const router = this._router;

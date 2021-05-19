@@ -176,4 +176,9 @@ interface $gmType {
      * @memberOf $gmType
      */
     __nsLogCheck(log: $NSLog, nsFilter: $NSFilter): boolean;
+
+    /**
+     * 调试用，如果开启后，所有send指令时，按此值额外将同一数据发送多次，加上本身的一次，一共发送`multiSend+1`次
+     */
+    multiSend: number;
 }
