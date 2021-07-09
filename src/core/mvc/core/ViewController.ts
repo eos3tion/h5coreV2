@@ -170,8 +170,12 @@ export class ViewController extends FHost {
             }
             const _awakeCallers = this._awakeCallers;
             if (_awakeCallers) {
-                for (let i = 0; i < _awakeCallers.length; i++) {
-                    _awakeCallers[i].call(this);
+                let len = _awakeCallers.length;
+                if (len) {
+                    const list = _awakeCallers.concat();
+                    for (let i = 0; i < len; i++) {
+                        list[i].call(this);
+                    }
                 }
             }
             //检查timer绑定
