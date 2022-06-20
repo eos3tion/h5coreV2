@@ -879,6 +879,15 @@ export class ByteArray {
         }
         return String.fromCharCode.apply(String, chunk.slice(0, i));
     }
+
+    toJSON() {
+        const bytes = this.outBytes;
+        const arr = [];
+        for (let i = 0; i < bytes.length; i++) {
+            arr[i] = bytes[i];
+        }
+        return arr;
+    }
 }
 let pt = ByteArray.prototype;
 if (typeof TextDecoder === "function") {//如果有原生的文本编码解析类  浏览器支持状况： http://caniuse.com/#feat=textencoder

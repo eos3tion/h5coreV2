@@ -527,9 +527,6 @@ export abstract class NetService {
                     let b = <ByteArray>dat;
                     bytes.writeUnsignedShort(b.length)
                     bytes.writeBytes(b);
-                    if (DEBUG) {
-                        outdata = Uint8Array.from(b.bytes);
-                    }
                     break;
                 default:
                     let tempBytes = this._tempBytes;
