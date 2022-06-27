@@ -1,7 +1,7 @@
 import { ArraySet } from "../data/ArraySet";
 import { Res } from "../res/Res";
 import { ByteArray } from "../data/ByteArray";
-import { dispatch } from "../App";
+import { App, dispatch } from "../App";
 import { Creator } from "../utils/ClassUtils";
 import { ThrowError } from "../debug/ThrowError";
 import { TimeVO } from "../data/TimeVO";
@@ -53,46 +53,50 @@ export function parsePakedDatas(noBinary?: boolean) {
     let configs = Res.get("cfgs");
     Res.remove("cfgs");
     if (!noBinary) {
-        configs = decodePakCfgs(new ByteArray(configs as ArrayBuffer));
+        configs = decodePakCfgs(new ByteArray(configs as ArrayBuffer), parse);
+    } else {
+        parse(configs);
     }
-    let dd = globalThis["$DD"] = {} as CfgData;
-    // 按顺序解析
-    for (let key of _plist) {
-        let parser = parsers[key];
-        let data = parser(configs[key]);
-        if (data) { // 支持一些void的情况
-            dd[key] = data;
-            dispatch(EventConst.OneCfgComplete, key);
-        }
-    }
-
-    let extraData = globalThis["$DE"] = {} as ExtraData;
-    //处理额外数据
-    for (let key in configs) {
-        if (key.charAt(0) == "$") {
-            let raw: any[] = configs[key];
-            key = key.substr(1);
-            if (raw) {
-                let i = 0, len = raw.length, data: { [index: string]: any } = {};
-                while (i < len) {
-                    let sub: string = raw[i++];
-                    let value = raw[i++];
-                    let test = raw[i];
-                    if (typeof test === "number") {
-                        i++;
-                        value = getJSONValue(value, test);
-                    }
-                    data[sub] = value;
-                }
-                extraData[key] = data;
+    function parse(configs: any) {
+        let dd = globalThis["$DD"] = {} as CfgData;
+        // 按顺序解析
+        for (let key of _plist) {
+            let parser = parsers[key];
+            let data = parser(configs[key]);
+            if (data) { // 支持一些void的情况
+                dd[key] = data;
+                dispatch(EventConst.OneCfgComplete, key);
             }
         }
-    }
 
-    dispatch(EventConst.CfgComplete);
-    //清理内存
-    parsers = null;
-    _plist = null;
+        let extraData = globalThis["$DE"] = {} as ExtraData;
+        //处理额外数据
+        for (let key in configs) {
+            if (key.charAt(0) == "$") {
+                let raw: any[] = configs[key];
+                key = key.substring(1);
+                if (raw) {
+                    let i = 0, len = raw.length, data: { [index: string]: any } = {};
+                    while (i < len) {
+                        let sub: string = raw[i++];
+                        let value = raw[i++];
+                        let test = raw[i];
+                        if (typeof test === "number") {
+                            i++;
+                            value = getJSONValue(value, test);
+                        }
+                        data[sub] = value;
+                    }
+                    extraData[key] = data;
+                }
+            }
+        }
+
+        dispatch(EventConst.CfgComplete);
+        //清理内存
+        parsers = null;
+        _plist = null;
+    }
 }
 
 /**
@@ -358,26 +362,36 @@ interface CfgHead extends JSONHeadItem {
 //配置数据 打包的文件结构数据
 //readUnsignedByte 字符串长度 readString 表名字 readUnsignedByte 配置类型(0 PBBytes 1 JSON字符串) readVarint 数据长度
 
-function decodePakCfgs(buffer: ByteArray) {
-    let cfgs = {} as { [key: string]: any };
-    while (buffer.readAvailable) {
-        let len = buffer.readUnsignedByte();
-        let key = buffer.readUTFBytes(len);//得到表名
-        let type = buffer.readUnsignedByte();
-        let value: any;
-        len = buffer.readVarint();
-        switch (type) {
-            case 0://JSON字符串
-                let str = buffer.readUTFBytes(len);
-                value = JSON.parse(str);
-                break;
-            case 1://PBBytes
-                value = buffer.readByteArray(len);
-                break;
+function decodePakCfgs(buffer: ByteArray, callback: { (cfgs: any): any }) {
+    let cfgs = {};
+
+    parseNext(App.getNow(), buffer, cfgs, callback)
+    function parseNext(now: number, buffer: ByteArray, cfgs: { [key: string]: any }, callback: { (cfgs: any): any }) {
+        while (buffer.readAvailable) {
+            let len = buffer.readUnsignedByte();
+            let key = buffer.readUTFBytes(len);//得到表名
+            let type = buffer.readUnsignedByte();
+            let value: any;
+            len = buffer.readVarint();
+            switch (type) {
+                case 0://JSON字符串
+                    if (len > 0) {
+                        let str = buffer.readUTFBytes(len);
+                        value = JSON.parse(str);
+                    }
+                    break;
+                case 1://PBBytes
+                    value = buffer.readByteArray(len);
+                    break;
+            }
+            cfgs[key] = value;
+            dispatch(EventConst.OneCfgLoaded, key);
+            if (Date.now() - now > 10) {
+                return App.nextTick(parseNext, buffer, cfgs, callback);
+            }
         }
-        cfgs[key] = value;
+        callback(cfgs);
     }
-    return cfgs;
 }
 
 function getParserOption(idkey: string | 0 = "id", type?: CfgDataType) {

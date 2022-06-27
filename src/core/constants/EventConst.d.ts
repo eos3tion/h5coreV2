@@ -26,9 +26,15 @@ declare const enum EventConst {
     ResLoadFailed,
     ResLoadSuccess,
     /**
-     * 单配置完成
+     * 单个配置解析成功  
+     * data {string} 配置的Key
      */
     OneCfgComplete,
+    /**
+     * 单个配置加载完成
+     * data {string} 配置的Key
+     */
+    OneCfgLoaded,
     /**
      * 配置解析完成
      */
