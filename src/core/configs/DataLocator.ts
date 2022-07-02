@@ -48,12 +48,13 @@ let _plist: string[] = [];
  * 解析原始的配置数据
  * @param noBinary true 则是已经解析的`原始数据`  
  *                 false 表示为二进制数据，先要预处理
+ * @param parseTime 分帧执行时长
  */
-export function parsePakedDatas(noBinary?: boolean) {
+export function parsePakedDatas(noBinary?: boolean, parseTime = 100) {
     let configs = Res.get("cfgs");
     Res.remove("cfgs");
     if (!noBinary) {
-        configs = decodePakCfgs(new ByteArray(configs as ArrayBuffer), parse);
+        configs = decodePakCfgs(new ByteArray(configs as ArrayBuffer), parse, parseTime);
     } else {
         parse(configs);
     }
@@ -362,11 +363,11 @@ interface CfgHead extends JSONHeadItem {
 //配置数据 打包的文件结构数据
 //readUnsignedByte 字符串长度 readString 表名字 readUnsignedByte 配置类型(0 PBBytes 1 JSON字符串) readVarint 数据长度
 
-function decodePakCfgs(buffer: ByteArray, callback: { (cfgs: any): any }) {
+function decodePakCfgs(buffer: ByteArray, callback: { (cfgs: any): any }, parseTime: number) {
     let cfgs = {};
 
-    parseNext(App.getNow(), buffer, cfgs, callback)
-    function parseNext(now: number, buffer: ByteArray, cfgs: { [key: string]: any }, callback: { (cfgs: any): any }) {
+    parseNext(App.getNow(), buffer, cfgs, callback, parseTime)
+    function parseNext(now: number, buffer: ByteArray, cfgs: { [key: string]: any }, callback: { (cfgs: any): any }, parseTime: number) {
         while (buffer.readAvailable) {
             let len = buffer.readUnsignedByte();
             let key = buffer.readUTFBytes(len);//得到表名
@@ -386,8 +387,8 @@ function decodePakCfgs(buffer: ByteArray, callback: { (cfgs: any): any }) {
             }
             cfgs[key] = value;
             dispatch(EventConst.OneCfgLoaded, key);
-            if (Date.now() - now > 10) {
-                return App.nextTick(parseNext, buffer, cfgs, callback);
+            if (Date.now() - now > parseTime) {
+                return App.nextTick(parseNext, buffer, cfgs, callback, parseTime);
             }
         }
         callback(cfgs);
