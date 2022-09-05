@@ -239,8 +239,10 @@ export function getPBUtils() {
                     break;
                 case PBType.Int64:
                 case PBType.UInt64:
-                case PBType.SInt64:
                     value = bytes.readVarint64();//理论上项目不使用
+                    break;
+                case PBType.SInt64:
+                    value = bytes.readSint64();
                     break;
                 case PBType.SInt32:
                     value = decodeZigzag32(bytes.readVarint());
@@ -482,10 +484,12 @@ export function getPBUtils() {
                 bytes.writeVarint(checkUInt32(value, type));
                 break;
             case PBType.Int64:
-            case PBType.SInt64:
             case PBType.UInt64:
                 bytes.writeVarint64(value);
                 break;
+            case PBType.SInt64:
+                bytes.writeSint64(value);
+                break
             case PBType.Bool:
                 bytes.writeVarint(value ? 1 : 0);
                 break;

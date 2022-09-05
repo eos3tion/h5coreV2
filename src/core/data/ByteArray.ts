@@ -1,5 +1,7 @@
 import { ThrowError } from "../debug/ThrowError";
-import { Int64 } from "./Int64";
+import { toNumber as Int64_toNumber, fromNumber as Int64_fromNumber, Int64 } from "./Int64";
+
+const tmpI64 = new Int64;
 
 export class ByteArray {
 
@@ -510,13 +512,13 @@ export class ByteArray {
                 low = data.getUint32(pos + BytesSize.SizeOfUint32, flag);
             }
             this.position = pos + BytesSize.SizeOfInt64;
-            return Int64.toNumber(low, high);
+            return Int64_toNumber(low, high);
         }
     }
 
     writeInt64(value: number): void {
         this.validateBuffer(BytesSize.SizeOfInt64);
-        let i64 = Int64.fromNumber(value);
+        let i64 = Int64_fromNumber(value);
         let { high, low } = i64;
         let flag = this.endian == BytesEdian.Little;
         let data = this.data;
@@ -612,12 +614,12 @@ export class ByteArray {
             let low = data.getUint32(pos, true);
             let high = data.getUint32(pos + BytesSize.SizeOfUint32, true);
             this.position = pos + BytesSize.SizeOfFix64;
-            return Int64.toNumber(low, high);
+            return Int64_toNumber(low, high);
         }
     }
 
     writeFix64(value: number) {
-        let i64 = Int64.fromNumber(value);
+        let i64 = Int64_fromNumber(value);
         this.validateBuffer(BytesSize.SizeOfFix64);
         let pos = this._position;
         let data = this.data;
@@ -642,14 +644,22 @@ export class ByteArray {
      * 向字节流中写入64位的可变长度的整数(Protobuf)
      */
     writeVarint64(value: number) {
-        let i64 = Int64.fromNumber(value);
-        var high = i64.high;
-        var low = i64.low;
+        let i64 = Int64_fromNumber(value);
+        this.inVarint64(i64);
+    }
+    writeSint64(value: number) {
+        let i64 = Int64_fromNumber(value);
+        i64.zigzag();
+        this.inVarint64(i64);
+    }
+    inVarint64(i64: Int64) {
+        let high = i64.high;
+        let low = i64.low;
         if (high == 0) {
             this.writeVarint(low >>> 0);
         }
         else {
-            for (var i: number = 0; i < 4; ++i) {
+            for (let i: number = 0; i < 4; ++i) {
                 this.writeByte((low & 0x7F) | 0x80);
                 low >>>= 7;
             }
@@ -701,11 +711,21 @@ export class ByteArray {
         }
         return result;
     }
-
     /**
       * 读取字节流中的32位变长整数(Protobuf)
       */
     readVarint64() {
+        this.outVarint64(tmpI64);
+        return tmpI64.toNumber();
+    }
+
+    readSint64() {
+        this.outVarint64(tmpI64);
+        tmpI64.zigzagDecode();
+        return tmpI64.toNumber();
+    }
+
+    outVarint64(i64: Int64) {
         let b: number, low: number, high: number, i = 0;
         for (; ; i += 7) {
             b = this.readUnsignedByte();
@@ -718,7 +738,7 @@ export class ByteArray {
                 }
                 else {
                     low |= (b << i);
-                    return Int64.toNumber(low, high);
+                    return i64.set(low, high);
                 }
             }
         }
@@ -730,7 +750,7 @@ export class ByteArray {
         else {
             low |= (b << i);
             high = b >>> 4;
-            return Int64.toNumber(low, high);
+            return i64.set(low, high);
         }
         for (i = 3; ; i += 7) {
             b = this.readUnsignedByte();
@@ -744,9 +764,8 @@ export class ByteArray {
                 }
             }
         }
-        return Int64.toNumber(low, high);
+        return i64.set(low, high);
     }
-
     /**
      * 获取写入的字节
      * 此方法不会新建 ArrayBuffer
