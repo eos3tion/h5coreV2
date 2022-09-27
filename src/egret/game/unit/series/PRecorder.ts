@@ -1,5 +1,5 @@
 import { recyclable, Recyclable } from "../../../../core/utils/ClassUtils";
-import { copyTo } from "../../../../core/utils/ObjectUtil";
+import { copyTo } from "../../../../core/utils/ObjectUtils";
 import { Unit } from "../Unit";
 import { PSeries } from "./PSeries";
 

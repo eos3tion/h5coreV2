@@ -2,7 +2,7 @@ import { IEaseFunction } from "./Ease";
 import { ITweenPlugin } from "./ITweenPlugin";
 import { EventEmitter } from "../event/EventEmitter";
 import { TweenManager } from "./TweenManager";
-import { clone } from "../utils/ObjectUtil";
+import { clone } from "../utils/ObjectUtils";
 
 /**
  * 参考createjs和白鹭的tween

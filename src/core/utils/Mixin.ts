@@ -1,4 +1,4 @@
-import { getPropertyDescriptor } from "./ObjectUtil";
+import { getPropertyDescriptor } from "./ObjectUtils";
 
 
 /**
