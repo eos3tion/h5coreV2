@@ -32,13 +32,13 @@ export function parsePath(url: string) {
     let a = url.lastIndexOf("/");
     let b = url.lastIndexOf("\\");
     if (a < b) {
-        path.dir = url.substr(0, b);
-        url = url.substr(b + 1);
+        path.dir = url.slice(0, b);
+        url = url.slice(b + 1);
         path.backslash = true
     } else {
         if (b < a) {
-            path.dir = url.substr(0, a);
-            url = url.substr(a + 1)
+            path.dir = url.slice(0, a);
+            url = url.slice(a + 1)
         } else {
             path.dir = ""
         }
@@ -47,8 +47,8 @@ export function parsePath(url: string) {
     let search = url.lastIndexOf("?");
     search == -1 && (search = undefined);
     dot == -1 && (dot = undefined);
-    path.ext = dot != undefined ? url.substr(dot, search) : "";
-    path.name = url.substr(0, dot);
-    path.base = url.substr(0, search);
+    path.ext = dot != undefined ? url.slice(dot, search) : "";
+    path.name = url.slice(0, dot);
+    path.base = url.slice(0, search);
     return path
 }
