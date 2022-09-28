@@ -1,7 +1,7 @@
 import { ThrowError } from "../debug/ThrowError";
 import { EventEmitter } from "../event/EventEmitter";
 import { dispatch } from "../App";
-import { getPropertyDescriptor } from "../utils/ObjectUtil";
+import { getPropertyDescriptor } from "../utils/ObjectUtils";
 
 /**
      * 绑定属性名，当属性值发生改变时，可自动对外抛eventType事件
