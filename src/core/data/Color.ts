@@ -43,7 +43,7 @@ export class Color {
         return this.concat(color);
     }
 
-    color() {
+    clone() {
         return new Color(this.r, this.g, this.b, this.a);
     }
 }
