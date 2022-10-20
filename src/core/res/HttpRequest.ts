@@ -120,7 +120,7 @@ export class HttpRequest extends EventEmitter implements IHttpRequest {
         xhr.ontimeout = onerror.bind(this)
         xhr.open(method, url, true);
     }
-    send(data?: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>) {
+    send(data?: Document | XMLHttpRequestBodyInit) {
         const { xhr, responseType, withCredentials, headerObj } = this;
         if (responseType != null) {
             xhr.responseType = responseType;
