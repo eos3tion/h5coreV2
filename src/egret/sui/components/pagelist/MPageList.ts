@@ -9,7 +9,7 @@ import { AbsPageList } from "./AbsPageList";
  * @class MPageList
  * @extends {PageList}
  */
-export class MPageList<T, R extends ListItemRender<T>> extends AbsPageList<T, R>{
+export class MPageList<R extends ListItemRender<T>, T = R["data"]> extends AbsPageList<R>{
 
     protected _viewCount = 0;
 

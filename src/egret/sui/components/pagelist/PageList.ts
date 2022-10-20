@@ -87,7 +87,7 @@ export interface PageListOption {
     scrollerOption?: ScrollerOption;
 }
 
-export class PageList<T, R extends ListItemRender<T>> extends AbsPageList<T, R> {
+export class PageList<R extends ListItemRender<T>, T = R["data"]> extends AbsPageList<R> {
 
     protected _factory: ClassFactory<R>;
 
@@ -917,7 +917,7 @@ export class PageList<T, R extends ListItemRender<T>> extends AbsPageList<T, R> 
 
         tmp.length = 0;
         return;
-        function check(i: number, d: PageList<T, ListItemRender<T>>) {
+        function check(i: number, d: PageList<R>) {
             let render = list[i];
             let v = render.view;
             if (v) {

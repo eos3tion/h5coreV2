@@ -1,6 +1,6 @@
 import { ListItemRender } from "../ListItemRenderer";
 
-export abstract class AbsPageList<T, R extends ListItemRender<T>> extends egret.EventDispatcher {
+export abstract class AbsPageList<R extends ListItemRender<T>, T = R["data"]> extends egret.EventDispatcher {
 
     protected _list: R[] = [];
 
